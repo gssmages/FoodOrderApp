@@ -1,0 +1,70 @@
+{
+    "AppName": "FoodOrderApp",
+    "Version": "1.0",
+    "Created": "11-Jun-2021",
+    "Deliverymanlist": [
+      {
+        "Name": "MageshbabuS",
+        "Mobile": "12323423424",
+		"Email": "magesh@gmail.com",
+		"Location":"Location1",
+		"Active":"Yes",
+      },
+      {
+        "Name": "MageshbabuS",
+        "Mobile": "12323423424",
+		"Email": "magesh@gmail.com",
+		"Location":"Location1",
+		"Active":"Yes",
+      },
+		{
+        "Name": "MageshbabuS",
+        "Mobile": "12323423424",
+		"Email": "magesh@gmail.com",
+		"Location":"Location1",
+		"Active":"Yes",
+      },
+		{
+        "Name": "MageshbabuS",
+        "Mobile": "12323423424",
+		"Email": "magesh@gmail.com",
+		"Location":"Location1",
+		"Active":"Yes",
+      },
+		{
+        "Name": "MageshbabuS",
+        "Mobile": "12323423424",
+		"Email": "magesh@gmail.com",
+		"Location":"Location1",
+		"Active":"Yes",
+      },
+		{
+        "Name": "MageshbabuS",
+        "Mobile": "12323423424",
+		"Email": "magesh@gmail.com",
+		"Location":"Location1",
+		"Active":"Yes",
+      },
+		{
+        "Name": "MageshbabuS",
+        "Mobile": "12323423424",
+		"Email": "magesh@gmail.com",
+		"Location":"Location1",
+		"Active":"Yes",
+      },
+		{
+        "Name": "MageshbabuS",
+        "Mobile": "12323423424",
+		"Email": "magesh@gmail.com",
+		"Location":"Location1",
+		"Active":"Yes",
+      },
+		{
+        "Name": "MageshbabuS",
+        "Mobile": "12323423424",
+		"Email": "magesh@gmail.com",
+		"Location":"Location1",
+		"Active":"Yes",
+      }
+    ]
+  }

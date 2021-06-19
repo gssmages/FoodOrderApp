@@ -14,7 +14,7 @@ ion-menu.md ion-list {
 }
 
 ion-menu.md ion-note {
-  margin-bottom: 30px;
+  margin-bottom: 0;
 }
 
 ion-menu.md ion-list-header,
@@ -47,6 +47,7 @@ ion-menu.md ion-item {
   --padding-start: 10px;
   --padding-end: 10px;
   border-radius: 4px;
+  --background: transparent;
 }
 
 ion-menu.md ion-item.selected {
@@ -75,7 +76,7 @@ ion-menu.ios ion-list {
 
 ion-menu.ios ion-note {
   line-height: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 ion-menu.ios ion-item {
@@ -111,7 +112,7 @@ ion-note {
   display: inline-block;
   font-size: 16px;
 
-  color: var(--ion-color-medium-shade);
+  color: var(--ion-color-dark-shade);
 }
 
 ion-item.selected {

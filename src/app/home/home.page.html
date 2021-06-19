@@ -1,0 +1,175 @@
+<ion-header >
+  <ion-toolbar color="primary" >
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Products</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content style="background:url('assets/Loginbg.jpg') bottom /100% 100%  no-repeat; --background:transparent;">
+<!--   <ion-card *ngFor="let item of Productlist; let i = index" >   
+    <ion-row> 
+    <ion-col size="4" class="ion-text-center ion-no-padding" >
+      <img src="assets/{{item.ProductImage}}" class="listimg">
+    </ion-col>
+    <ion-col size="8" class="ion-no-padding" style="color: #555;">
+      <div class="productname">{{item.ProductName}}</div>
+      <ion-item>
+        <ion-label>Rs. 50 <span style="font-size: 10px;"> / {{item.Unit}}</span></ion-label>
+        <ion-icon name="remove-circle" (click)="decrement()" style="font-size:32px;"></ion-icon>
+         <span style="font-size: 24px; padding: 0 5px;">{{item.Qty}}</span> 
+          <ion-icon name="add-circle" (click)="increment()" style="font-size:32px;"></ion-icon>
+      </ion-item>
+     </ion-col>           
+  </ion-row>
+</ion-card> -->
+ 
+<ion-card>   
+    <ion-row> 
+    <ion-col size="4" class="ion-text-center ion-no-padding" >
+      <img src="assets/milk.jpg" class="listimg">
+    </ion-col>
+    <ion-col size="8" class="ion-no-padding" style="color: #555;">
+      <div class="productname">Pasteurized Milk</div>
+      <ion-item>
+        <ion-label>Rs. 50 <span style="font-size: 10px;"> / Ltr</span></ion-label>
+        <ion-icon name="remove-circle" (click)="decrement()" style="font-size:32px;"></ion-icon>
+         <span style="font-size: 24px; padding: 0 5px;">{{currentNumber}}</span> 
+          <ion-icon name="add-circle" (click)="increment()" style="font-size:32px;"></ion-icon>
+      </ion-item>
+     </ion-col>           
+  </ion-row>
+</ion-card>
+ <ion-card>   
+    <ion-row> 
+    <ion-col size="4" class="ion-text-center ion-no-padding" >
+      <img src="assets/milk2.jpg" class="listimg">
+    </ion-col>
+    <ion-col size="8" class="ion-no-padding" style="color: #555;">
+      <div class="productname">Double toned milk</div>
+      <ion-item>
+        <ion-label>Rs. 50 <span style="font-size: 10px;"> / Ltr</span></ion-label>
+        <ion-icon name="remove-circle" (click)="decrement()" style="font-size:32px;"></ion-icon>
+        <span style="font-size: 24px; padding: 0 5px;">{{currentNumber}}</span> 
+          <ion-icon name="add-circle" (click)="increment()" style="font-size:32px;"></ion-icon>
+      </ion-item>
+     </ion-col>           
+  </ion-row>
+</ion-card>
+<ion-card>   
+  <ion-row> 
+  <ion-col size="4" class="ion-text-center ion-no-padding" >
+    <img src="assets/bread.jpg" class="listimg">
+  </ion-col>
+  <ion-col size="8" class="ion-no-padding" style="color: #555;">
+    <div class="productname">Bread</div>
+    <ion-item>
+      <ion-label>Rs. 40 <span style="font-size: 10px;"> / Pack</span></ion-label>
+      <ion-icon name="remove-circle" (click)="decrement()" style="font-size:32px;"></ion-icon>
+       <span style="font-size: 24px; padding: 0 5px;">{{currentNumber}}</span> 
+        <ion-icon name="add-circle" (click)="increment()" style="font-size:32px;"></ion-icon>
+    </ion-item>
+   </ion-col>           
+</ion-row>
+</ion-card>
+<ion-card>   
+  <ion-row> 
+  <ion-col size="4" class="ion-text-center ion-no-padding" >
+    <img src="assets/breadpack.jpg" class="listimg">
+  </ion-col>
+  <ion-col size="8" class="ion-no-padding" style="color: #555;">
+    <div class="productname">Special Bread</div>
+    <ion-item>
+      <ion-label>Rs. 40 <span style="font-size: 10px;"> / Pack</span></ion-label>
+      <ion-icon name="remove-circle" (click)="decrement()" style="font-size:32px;"></ion-icon>
+       <span style="font-size: 24px; padding: 0 5px;">{{currentNumber}}</span> 
+        <ion-icon name="add-circle" (click)="increment()" style="font-size:32px;"></ion-icon>
+    </ion-item>
+   <!--  -- <ion-item>
+      <ion-label>Quantity</ion-label>
+      <ion-select placeholder="Select Quantity">
+        <ion-select-option value="1">1 Pack</ion-select-option>
+        <ion-select-option value="2">2 Pack</ion-select-option>
+        <ion-select-option value="3">3 Pack</ion-select-option>
+        <ion-select-option value="4">4 Pack</ion-select-option>
+      </ion-select>
+    </ion-item> -- -->
+   </ion-col>           
+</ion-row>
+</ion-card>
+<ion-card>   
+  <ion-row> 
+  <ion-col size="4" class="ion-text-center ion-no-padding" >
+    <img src="assets/breadpack3.jpeg" class="listimg">
+  </ion-col>
+  <ion-col size="8" class="ion-no-padding" style="color: #555;">
+    <div class="productname">Brown Bread</div>
+    <ion-item>
+      <ion-label>Rs. 40 <span style="font-size: 10px;"> / Pack</span></ion-label>
+      <ion-icon name="remove-circle" (click)="decrement()" style="font-size:32px;"></ion-icon>
+       <span style="font-size: 24px; padding: 0 5px;">{{currentNumber}}</span> 
+        <ion-icon name="add-circle" (click)="increment()" style="font-size:32px;"></ion-icon>
+    </ion-item>
+   </ion-col>           
+</ion-row>
+</ion-card>
+<ion-card>   
+  <ion-row> 
+  <ion-col size="4" class="ion-text-center ion-no-padding" >
+    <img src="assets/eggs.jpg" class="listimg">
+  </ion-col>
+  <ion-col size="8" class="ion-no-padding" style="color: #555;">
+    <div class="productname">Eggs</div>
+    <ion-item>
+      <ion-label>Rs. 6 <span style="font-size: 10px;"> / Piece</span></ion-label>
+      <ion-icon name="remove-circle" (click)="decrement()" style="font-size:32px;"></ion-icon>
+       <span style="font-size: 24px; padding: 0 5px;">{{currentNumber}}</span> 
+        <ion-icon name="add-circle" (click)="increment()" style="font-size:32px;"></ion-icon>
+    </ion-item>
+   </ion-col>           
+</ion-row>
+</ion-card>
+<ion-card>   
+  <ion-row>
+  <ion-col size="4" class="ion-text-center ion-no-padding" >
+    <img src="assets/browneggbasket.jpg" class="listimg">
+  </ion-col>
+  <ion-col size="8" class="ion-no-padding" style="color: #555;">
+    <div class="productname">Brown Eggs</div>
+    <ion-item>
+      <ion-label>Rs. 6 <span style="font-size: 10px;"> / piece</span></ion-label>
+      <ion-icon name="remove-circle" (click)="decrement()" style="font-size:32px;"></ion-icon>
+       <span style="font-size: 24px; padding: 0 5px;">{{currentNumber}}</span> 
+        <ion-icon name="add-circle" (click)="increment()" style="font-size:32px;"></ion-icon>
+    </ion-item>
+   <!--  !-- <ion-item>
+      <ion-label>Quantity</ion-label>
+      <ion-select placeholder="Select Quantity">
+        <ion-select-option value="2">2 eggs</ion-select-option>
+        <ion-select-option value="3">4 eggs</ion-select-option>
+        <ion-select-option value="4">6 eggs</ion-select-option>
+        <ion-select-option value="1">8 eggs</ion-select-option>
+        <ion-select-option value="2">10 eggs</ion-select-option>
+        <ion-select-option value="3">20 eggs</ion-select-option>
+        <ion-select-option value="4">30 eggs</ion-select-option>
+        <ion-select-option value="1">2 Plate (60 eggs)</ion-select-option>
+        <ion-select-option value="2">3 Plate (90 eggs)</ion-select-option>
+      </ion-select>
+    </ion-item> -- -->
+   </ion-col>           
+</ion-row>
+</ion-card> 
+</ion-content>
+<ion-footer  >
+  <ion-grid style="padding: 0;">
+    <ion-row style="padding: 0;">
+      <ion-col style="padding: 0;">
+        <ion-button expand="full" color="primary"
+         style="--margin-top:0;--margin-bottom:0; margin: 0; height: 48px;" (click)="placeorder()" >
+         Place Order
+        </ion-button>
+      </ion-col>
+     
+    </ion-row>
+  </ion-grid>
+</ion-footer>

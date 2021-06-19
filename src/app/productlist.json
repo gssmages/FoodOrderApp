@@ -1,0 +1,72 @@
+[
+  {
+    "AppName": "FoodOrderApp",
+    "Version": "1.0",
+    "ProductListCreated": "11-Jun-2021",
+    "Productlist": [
+      {
+        "ProductName": "Pasteurized Milk",
+        "Expiry": "11-July-2021",
+		"Qty": "0",
+		"Unit":"Ltr",
+		"ProductImage":"milk.jpg"
+      },
+      {
+        "ProductName": "Double toned milk",
+        "Expiry": "11-July-2021",
+		"Qty": "0",
+		"Unit":"Ltr",
+		"ProductImage":"milk.jpg"
+      },
+      {
+        "ProductName": "Bread",
+        "Expiry": "11-July-2021",
+		"Qty": "0",
+		"Unit":"Pack",
+		"ProductImage":"milk.jpg"
+      },
+      {
+        "ProductName": "Special Bread",
+        "Expiry": "11-July-2021",
+		"Qty": "0",
+		"Unit":"Pack",
+		"ProductImage":"milk.jpg"
+      },
+      {
+        "ProductName": "Brown Bread",
+        "Expiry": "11-July-2021",
+		"Qty": "0",
+		"Unit":"Pack",
+		"ProductImage":"milk.jpg"
+      },
+      {
+        "ProductName": "Eggs",
+        "Expiry": "11-July-2021",
+		"Qty": "0",
+		"Unit":"Pieces",
+		"ProductImage":"milk.jpg"
+      },
+      {
+        "ProductName": "Brown Eggs",
+        "Expiry": "11-July-2021",
+		"Qty": "0",
+		"Unit":"Pieces",
+		"ProductImage":"milk.jpg"
+      },
+      {
+        "ProductName": "Brown Eggs",
+        "Expiry": "11-July-2021",
+		"Qty": "0",
+		"Unit":"Pieces",
+		"ProductImage":"milk.jpg"
+      },
+      {
+        "ProductName": "Brown Eggs",
+        "Expiry": "11-July-2021",
+		"Qty": "0",
+		"Unit":"Pieces",
+		"ProductImage":"milk.jpg"
+      }
+    ]
+  }
+]
