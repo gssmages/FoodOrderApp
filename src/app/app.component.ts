@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
+import { Globals } from './globals';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  loginname:any;
+  loginmobile:any;
+  loginemail:any;
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home' },    
-    { title: 'Delivery Man', url: '/deliverymanpage', icon: 'home' },
-    { title: 'My Profile', url: '/addresspage', icon: 'mail' },
+    { title: 'Delivery Man', url: '/deliverymanpage', icon: 'home' },    
+    { title: 'My Profile', url: '/myprofile', icon: 'person' },
+    { title: 'My Addresses', url: '/addresspage', icon: 'mail' },
     { title: 'My Orders', url: '/myorders', icon: 'basket' },
     { title: 'Logout', url: '/login', icon: 'log-out' }
   ];
@@ -21,5 +26,8 @@ export class AppComponent {
     { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders']; */
-  constructor() {}
+  constructor(public globals: Globals) {
+
+
+  }
 }

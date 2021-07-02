@@ -1,0 +1,16 @@
+{
+  "HEADER": {
+    "language": "Language",
+    "logout": "Logout"
+  },
+  "LOGIN": {
+    "head": "Login",
+    "signup": "Sign Up",
+    "forgot": "Forgot Password?",
+    "register": "Register",
+    "email": "Email Id",
+    "password": "Password",    
+    "newuser": "New User",
+    "language": "Language"
+  }
+}

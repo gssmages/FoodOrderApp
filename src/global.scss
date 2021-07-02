@@ -30,7 +30,8 @@
 .listimg
 {
     width: 100%;
-    height: 100%;
+    height: 80px;
+    max-height: 100%;
 }
 .productname
 {
@@ -38,4 +39,24 @@
     font-weight: bold;
     padding-left: 15px;
     margin-top: 10px;
+}
+.prodinfo
+{
+    display: flex;
+     align-items: center;
+      justify-content: space-between;
+      padding:0 1rem;
+      margin: .5rem 0;
+}
+.prodinfo ion-label
+{
+    flex: 1 1 0%;
+}
+.selected
+{
+    color:#555;
+}
+.nonselected
+{
+    color:#afafaf;
 }

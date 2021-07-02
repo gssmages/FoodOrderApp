@@ -24,7 +24,7 @@ export class MyordersPage implements OnInit {
   }
   gotodetailpage()
   {
-    this.globals.Orderdetails={id:10};
+    this.globals.neworder=false;
      
     this.router.navigate(['/detailpage']);  
   }

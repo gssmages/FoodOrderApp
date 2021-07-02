@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import { MenuController,Platform} from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
-
+import { TranslateConfigService } from '../translate-config.service';
+import { TranslateService } from '@ngx-translate/core';
+import { RestApiService } from '../rest-api.service';
+import { Globals } from '../globals';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -21,19 +24,39 @@ export class LoginPage implements OnInit {
   showregisterblock: boolean = false;
   private loading: any;  
   backButtonSubscription:any;
+  selectedLanguage:string;
+  languageselect:any;
+  logindetails:any;
+  /*******For Lang support********* */
+  
+  logintitle:any;
+  new_user:any;
+  register:any;
+  language:any;
 
   constructor( private router: Router,
     public menu: MenuController,
     public alertController: AlertController,
     public loadingController: LoadingController,
-    private platform: Platform) { }
+    private platform: Platform,
+    private translateconfigService: TranslateConfigService,
+    private _translate: TranslateService,    
+    private loginservice: RestApiService,
+    public globals: Globals
+    ) {
+
+      this.selectedLanguage = this.translateconfigService.getDefaultLanguage();
+      this.languageselect = this.selectedLanguage;
+      this._initialiseTranslation()
+     }
 
   ngOnInit() {
   }
  ngOnDestroy() {
     this.backButtonSubscription.unsubscribe();
   }
-  ionViewWillEnter() { this.menu.enable(false);
+  ionViewWillEnter() { 
+    this.menu.enable(false);
     this.backButtonSubscription = this.platform.backButton.subscribeWithPriority(9999,async () => {
       this.router.navigate(['/login']);
       // Catches the active view
@@ -59,10 +82,32 @@ export class LoginPage implements OnInit {
               return await alert.present();
           }
     });
+    this.translateconfigService.getDefaultLanguage();
    }
   ionViewDidLeave() {
     // enable the root left menu when leaving the tutorial page
     this.menu.enable(true);
+  }
+  _initialiseTranslation(): void {
+    this._translate.get('LOGIN.head').subscribe((res: string) => {
+      this.logintitle = res;
+    });
+     this._translate.get('LOGIN.newuser').subscribe((res: string) => {
+      this.new_user = res;
+    });
+    this._translate.get('LOGIN.register').subscribe((res: string) => {
+      this.register = res;
+    });
+    this._translate.get('LOGIN.language').subscribe((res: string) => {
+      this.language = res;
+    });
+   /* this._translate.get('TITLE_2', { value: 'John' }).subscribe((res: string) => {
+      this.title_2 = res;
+    });
+    this._translate.get('data.name', { name_value: 'Marissa Mayer' }).subscribe((res: string) => {
+      this.name = res;
+    });
+ */
   }
   getvalidmobileno($event) {
     //console.log(this.mobilenumber)
@@ -106,7 +151,7 @@ export class LoginPage implements OnInit {
           if(!valid)
           {
             this.email="";
-            this.presentAlert("Please enter valid Email")
+            //this.presentAlert("Please enter valid Email")
           }
           else
           return true;
@@ -119,9 +164,9 @@ export class LoginPage implements OnInit {
     {
       newpass = newpass.toString();
       confirmpass = confirmpass.toString();
-      console.log(newpass + confirmpass)
+      //console.log(newpass + confirmpass)
       if (newpass !== confirmpass) {
-        this.presentAlert("Please check new password and confirm password match")
+       // this.presentAlert("Please check new password and confirm password match")
         return false;
         }
         else{
@@ -133,22 +178,124 @@ export class LoginPage implements OnInit {
     this.showregisterblock = true;
     this.showloginblock= false;
   }
+  gotologin(){
+    this.showregisterblock = false;
+    this.showloginblock= true;
+  }
   newregister(){
     let validemail = this.validateemail();
     let validpassword = this.matchpassword(this.newpassword,this.confirmpassword);
-    if(this.newmobilenumber && validemail && validpassword) 
+    if(this.newmobilenumber) 
     {      
-      this.showregisterblock = false;
-      this.showloginblock= true;
-      this.presentAlert("Please enter mobile no and password to login...")
+      if(this.newmobilenumber.toString().length == 10)
+      { 
+        if(validemail)
+        {
+           if(validpassword)
+           {
+            this.presentLoading();
+            this.loginservice.CheckMobileExistsData(this.newmobilenumber).subscribe(
+              (res) => {
+                //console.log(res); 
+                
+                if (res.length != 0) {
+                  setTimeout(() => {this.loading.dismiss(); }, 2000);
+                  //console.log("Mobile No. Already Exist");
+                  this.presentAlert("Mobile No. Already Exist");
+                }
+                else
+                {
+                  this.loginservice.setNewCustomerData(this.newmobilenumber,this.newpassword,this.email).subscribe(
+                    (res) => {
+                      //console.log(res);
+                      setTimeout(() => {this.loading.dismiss(); }, 2000);
+                      if (res != "") {
+                        this.logindetails = res;
+                        console.log(this.logindetails)
+                        this.router.navigate(['/home']);
+                      }
+                    },
+                    (err) => {
+                      console.log(err);
+                      setTimeout(() => {this.loading.dismiss();}, 2000);
+                      this.presentAlert(err);
+                    }
+                  );
+                }
+              },
+              (err) => {
+                console.log(err);
+                setTimeout(() => {this.loading.dismiss();}, 2000);
+                this.presentAlert(err);
+              }
+            );
+            //this.showregisterblock = false;
+            //this.showloginblock= true;
+            //this.presentAlert("Please enter mobile no and password to login...")
+           }
+           else
+           this.presentAlert("Please check new password and confirm password match")
+        }
+        else
+        this.presentAlert("Please enter valid Email")
+      }
+      else{
+        this.presentAlert("Please Enter Valid 10 digit Mobile Number")
+      }
+      
     }
     else{
       this.presentAlert("Please enter all the fields...")
     }
   }
   login() {
-
-    this.router.navigate(['/home']);
+    if(this.mobilenumber && this.password)
+    {
+      if(this.mobilenumber.toString().length == 10)
+      {
+        this.presentLoading();
+          this.loginservice.getCustomerLoginData(this.mobilenumber,this.password).subscribe(
+            (res) => {
+             // console.log(res);
+              setTimeout(() => {
+                this.loading.dismiss();
+              }, 1000);
+              if (res.length != 0) {
+                this.logindetails = res[0];                
+                this.globals.logininfo=res[0];
+                
+                this.globals.loginname = this.logindetails.name;
+                this.globals.loginmobile = this.logindetails.mobile;
+                this.globals.loginemail = this.logindetails.email;
+                this.globals.customerid= this.logindetails._id;
+                console.log(this.logindetails)
+                this.router.navigate(['/home']);
+              }
+              else
+              this.presentAlert("Invalid User.");
+            },
+            (err) => {
+              console.log(err);
+              setTimeout(() => {
+                this.loading.dismiss();
+              }, 2000);
+              this.presentAlert(err);
+            }
+          );
+        
+      }
+      else{
+        this.presentAlert("Please Enter Valid 10 digit Mobile Number")
+      }
+    }
+    else{
+      this.presentAlert("Please Enter Valid 10 digit Mobile Number and Password")
+    }
+    
+  }
+  languageChange(){
+    this.translateconfigService.setLanguage(this.languageselect);
+    this._initialiseTranslation();
   }
   async presentAlert(alertmessage: string) {
     const alert = await this.alertController.create({

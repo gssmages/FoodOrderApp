@@ -3,10 +3,58 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>My Profile</ion-title>
+    <ion-title>My Addresses</ion-title>
+    <ion-buttons (click)="clickedSearch()" slot="end">
+      <ion-button >
+      <ion-icon slot="icon-only" name="create"></ion-icon>
+    </ion-button>
+    </ion-buttons>    
   </ion-toolbar>
 </ion-header>
-<ion-content style="background: url('assets/Loginbg.jpg') bottom / 100% 100% no-repeat;--background: transparent;">
+<ion-content style="background: url('assets/pagebg.jpg') bottom / 100% 100% no-repeat;--background: transparent;">
+  <ion-toolbar  color="secondary">   
+    <ion-title><ion-icon name="checkmark-circle-outline"></ion-icon>  Select Default Address</ion-title>
+  </ion-toolbar>
+  <div >
+    <ion-grid class="ion-no-padding"> 
+          <ion-card>
+            <ion-row class="ion-padding-vertical">
+              <ion-col size="2" class="ion-text-center" >
+                 <ion-icon name="checkmark-circle-outline" class="selected" style="font-size:32px; margin-top: 10px;"></ion-icon>
+                </ion-col>
+              <ion-col size="10"> 
+                <ion-card-header class="ion-no-padding">
+                <ion-card-title>Magesh Babu S</ion-card-title>
+              </ion-card-header>          
+              <ion-card-content class="ion-no-padding">
+                <p>No: 57, Coimbatore Road, 
+                  2nd Cross, Metupalayam Road, 
+                  Metupalayam -623234. 
+                </p>
+              </ion-card-content>
+            </ion-col>
+            </ion-row>
+          </ion-card>
+          <ion-card>
+            <ion-row class="ion-padding-vertical">
+              <ion-col size="2" class="ion-text-center" >
+                 <ion-icon name="ellipse-outline" class="nonselected" style="font-size:32px; margin-top: 10px;"></ion-icon>
+                </ion-col>
+              <ion-col size="10"> 
+                <ion-card-header class="ion-no-padding">
+                <ion-card-title>Magesh Babu S</ion-card-title>
+              </ion-card-header>          
+              <ion-card-content class="ion-no-padding">
+                <p>No: 57, Coimbatore Road, 
+                  2nd Cross, Metupalayam Road, 
+                  Metupalayam -623234. 
+                </p>
+              </ion-card-content>
+            </ion-col>
+            </ion-row>
+          </ion-card>
+    </ion-grid>
+  </div>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Delivery Address</ion-card-title>
@@ -15,34 +63,34 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="stacked">Name</ion-label>
-        <ion-input placeholder="placeholder" type="text"></ion-input>
+        <ion-input placeholder="placeholder" readonly type="text" value="{{globals.loginname}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Mobile Number</ion-label>
-        <ion-input placeholder="placeholder" readonly type="text"></ion-input>
+        <ion-input placeholder="placeholder" readonly type="text" value="{{globals.loginmobile}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
-        <ion-input placeholder="placeholder" readonly type="text"></ion-input>
+        <ion-input placeholder="placeholder" readonly type="text" value="{{globals.loginemail}}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Multiple Inputs</ion-label>
-        <ion-input placeholder="Door No/Flat No"></ion-input>
-        <ion-input placeholder="Address Line 1"></ion-input>
-        <ion-input placeholder="Address Line 2"></ion-input>
-        <ion-input placeholder="Area"></ion-input>
+        <ion-input placeholder="Door No/Flat No" [(ngModel)]="doorno"></ion-input>
+        <ion-input placeholder="Address Line 1" [(ngModel)]="address1"></ion-input>
+        <ion-input placeholder="Address Line 2" [(ngModel)]="address2"></ion-input>
+        <ion-input placeholder="Area" [(ngModel)]="area"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Location</ion-label>
-        <ion-select placeholder="Select One">
-          <ion-select-option value="1">Anna Nagar</ion-select-option>
-          <ion-select-option value="2">Kilpauk</ion-select-option>
-          <ion-select-option value="3">Perambur</ion-select-option>
-          <ion-select-option value="4">Purasaivakkam</ion-select-option>
-          <ion-select-option value="5">Villivakkam</ion-select-option>
-          <ion-select-option value="6">Choolai</ion-select-option>
-          <ion-select-option value="7">Jamalia</ion-select-option>
-          <ion-select-option value="8">Ayanavaram</ion-select-option>
+        <ion-select placeholder="Select One" [(ngModel)]="location">
+          <ion-select-option value="Anna Nagar">Anna Nagar</ion-select-option>
+          <ion-select-option value="Kilpauk">Kilpauk</ion-select-option>
+          <ion-select-option value="Perambur">Perambur</ion-select-option>
+          <ion-select-option value="Purasaivakkam">Purasaivakkam</ion-select-option>
+          <ion-select-option value="Villivakkam">Villivakkam</ion-select-option>
+          <ion-select-option value="Choolai">Choolai</ion-select-option>
+          <ion-select-option value="Jamalia">Jamalia</ion-select-option>
+          <ion-select-option value="Ayanavaram">Ayanavaram</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-card-content>
@@ -56,9 +104,9 @@
           expand="full"
           color="primary"
           style="--margin-top: 0; --margin-bottom: 0; margin: 0; height: 48px"
-          (click)="confirmorder()"
+          (click)="SaveCustomerAddress()"
         >
-          Save Changes
+          Save Address
         </ion-button>
       </ion-col>
     </ion-row>

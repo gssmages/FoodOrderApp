@@ -35,6 +35,14 @@ const routes: Routes = [
   {
     path: 'deliverymanpage',
     loadChildren: () => import('./deliverymanpage/deliverymanpage.module').then( m => m.DeliverymanpagePageModule)
+  },
+  {
+    path: 'viewmap',
+    loadChildren: () => import('./viewmap/viewmap.module').then( m => m.ViewmapPageModule)
+  },
+  {
+    path: 'myprofile',
+    loadChildren: () => import('./myprofile/myprofile.module').then( m => m.MyprofilePageModule)
   }
 ];
 

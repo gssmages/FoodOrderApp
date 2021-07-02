@@ -22,6 +22,8 @@ db.Productlist.updateMany({},{$set: {"Active":true}})
 
 db.Productlist.updateMany({},{$set: {"Qty":0}})
 
+db.Productlist.updateMany({},{$set: {"ProductImage":"fruit3.jpg"}})
+
   db.Productlist.insertMany([{'ProductName':'Pasteurized Milk','Expiry':'11-July-2021','Qty': 0,'Unit':'Ltr','ProductImage': 'milk.jpg'}])
 
 db.Productlist.insertMany([
@@ -174,3 +176,75 @@ db.products.insert(
    ],
    { ordered: false }
 )
+
+db.Customer.insertOne(  
+   {'mobile':'9144234232323','password':'231234123123',
+   'name': 'Magesh Babu S','email':'magesh@gmail.com','doorno': '345',
+   'address1': 'Perumal Street','address2': '3rd cross Street','area': 'Choolaimedu','location': 'Choolai'}
+)
+
+db.Customer.insertOne(  
+   {'mobile':'9144234232323','password':'231234123123',
+   'name': 'Magesh Babu S','email':'magesh@gmail.com'}
+)
+
+db.Customer.updateMany({},{$set: {"geolatlang":"12.0023423429,23.3434234234"}})
+
+db.Customer.find()
+
+db.Customer.drop();
+
+db.CustomerAddress.insertOne(  
+   { 'custid':'3453434',
+     'doorno': '345','address1': 'Perumal Street','address2': '3rd cross Street',
+     'area': 'Choolaimedu','location': 'Choolai',"geolatlang":"12.0023423429,23.3434234234"}
+)
+
+db.CustomerAddress.find()
+
+db.CustomerAddress.updateMany({},{$set: {"custid":"60dc70bb15541034d46902f9"}})
+
+db.CustomerAddress.find({'custid':'3453434'})
+
+db.Admin.insert({
+  'mobile':'9999999999',
+  'password':'12345678',
+   'name': 'Bhaaskar Ts',
+   'email':'bhaaskar27@gmail.com'
+})
+
+db.Admin.find()
+
+db.Location.insertMany([
+  {'location':'Perambur'},{'location':'Anna Nagar'},{'location': 'Kilpauk'},{'location':'Purasaivakkam'},
+      {'location':'Villivakkam'},{'location':'Choolai'},{'location':'Jamalia'},{'location':'Ayanavaram'}])
+
+db.Location.find()
+
+
+db.DeliveryMan.insertMany([
+  {'location':'Perambur','name':'Sureshbabu','mobile':'9454574623','email':'deliveryman@gmail.com',
+  'doorno':'342','address1':'address12342','address2':'Annanagar 1st street','area':'Annanagar east','Active':true }])
+
+db.DeliveryMan.find()
+
+db.Orders.insertMany([
+  {'orderid':'20210600001',
+  'orderdatetime':new Date(),
+  'custid':'2323312313',
+  'Products':[
+    {'prodid':'3453453453','qty':32},
+    {'prodid':'45345345345345','qty':45},
+    {'prodid':'3467868768','qty':54},
+  ],
+  'deliverymanid':'23',
+  'status':'Delivered' }])
+
+db.Orders.find();
+
+db.Orders.find( {"orderid": "20210600002" })
+
+db.Orders.find( { _id: { $in: [ ObjectId("60d03c204d555a4fc81d2d28") ] } })
+
+
+db.Orders.drop();

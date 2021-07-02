@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Profile</ion-title>
+    <ion-buttons (click)="clickedSearch()" slot="end">
+      <ion-button >
+      <ion-icon slot="icon-only" name="create"></ion-icon>
+    </ion-button>
+    </ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+<ion-content style="background: url('assets/pagebg.jpg') bottom / 100% 100% no-repeat;--background: transparent;">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>My Profile</ion-card-title>
+      <ion-card-subtitle>All Are Mandatory</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input placeholder="placeholder" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Mobile Number</ion-label>
+        <ion-input placeholder="placeholder" readonly type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input placeholder="placeholder" readonly type="text"></ion-input>
+      </ion-item>
+      
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+<ion-footer>
+  <ion-grid style="padding: 0">
+    <ion-row style="padding: 0">
+      <ion-col style="padding: 0">
+        <ion-button
+          expand="full"
+          color="primary"
+          style="--margin-top: 0; --margin-bottom: 0; margin: 0; height: 48px"
+          (click)="confirmorder()"
+        >
+          Save
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

@@ -6,12 +6,7 @@
     <ion-title>Detail Page</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content
-  style="
-    background: url('assets/Loginbg.jpg') bottom / 100% 100% no-repeat;
-    --background: transparent;
-  "
->
+<ion-content style="background: url('assets/pagebg.jpg') bottom / 100% 100% no-repeat;--background: transparent;">
   <ion-card>
     <ion-card-header>
       <ion-card-title
@@ -20,11 +15,16 @@
           <ion-icon name="basket-outline" slot="start"></ion-icon>
         </span>
       </ion-card-title>
-      <ion-card-subtitle>Total Orders : 5 </ion-card-subtitle>
+     
     </ion-card-header>
 
     <ion-card-content>
-      <ion-row>
+      <ion-row *ngFor="let item of selectedproduct; let i = index" >
+        <ion-col size="7"> {{item.ProductName}}({{ item.Price }})</ion-col>
+        <ion-col class="ion-text-center"> {{item.Qty}}  {{item.Unit}} </ion-col>
+        <ion-col class="ion-text-right"> Rs. {{ item.total }} </ion-col>
+      </ion-row>
+      <!-- <ion-row>
         <ion-col size="6"> Pasteurized Milk </ion-col>
         <ion-col class="ion-text-center"> 2 Ltr </ion-col>
         <ion-col class="ion-text-right"> Rs. 100 </ion-col>
@@ -43,20 +43,15 @@
         <ion-col size="6"> Pasteurized Milk </ion-col>
         <ion-col class="ion-text-center"> 2 Ltr </ion-col>
         <ion-col class="ion-text-right"> Rs. 100 </ion-col>
-      </ion-row>
+      </ion-row> -->
       <ion-row>
-        <ion-col size="6"> Pasteurized Milk </ion-col>
-        <ion-col class="ion-text-center"> 2 Ltr </ion-col>
-        <ion-col class="ion-text-right"> Rs. 100 </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="6"> </ion-col>
-        <ion-col class="ion-text-center"><strong>Total</strong> </ion-col>
-        <ion-col class="ion-text-right"> <strong>Rs. 500 </strong></ion-col>
+        <ion-col size="6"> <ion-card-subtitle>Total Orders Qty : {{totalqty}} </ion-card-subtitle></ion-col>
+        <ion-col class="ion-text-right"><strong>Total</strong> </ion-col>
+        <ion-col class="ion-text-right"> <strong>Rs. {{totalamt}} </strong></ion-col>
       </ion-row>
     </ion-card-content>
   </ion-card>
-  <ion-card>
+  <!-- <ion-card>
     <ion-card-header>
       <ion-card-title>Delivery Address</ion-card-title>
       <ion-card-subtitle>All Are Mandatory</ion-card-subtitle>
@@ -95,7 +90,35 @@
         </ion-select>
       </ion-item>
     </ion-card-content>
+    
+  </ion-card> -->
+  <ion-card>
+    <ion-row class="ion-padding">      
+      <ion-col size="12"> 
+        <ion-card-header class="ion-no-padding" >
+          <ion-card-title>Delivery Address</ion-card-title>
+        <ion-card-title>{{loginname}}</ion-card-title>
+      </ion-card-header>          
+      <ion-card-content class="ion-no-padding" >
+        <p>
+          {{doorno}} <br>
+          {{address1}}<br>
+          {{address2}}<br>
+          {{area}}<br>
+          {{location}}<br>
+          {{loginmobile}}
+          <!-- No: 57, Coimbatore Road, 
+          2nd Cross, Metupalayam Road, 
+          Metupalayam -623234.  -->
+        </p>
+      </ion-card-content>
+    </ion-col>
+    </ion-row>
+    <ion-button  expand="block"  color="secondary"  style="height: 48px"  (click)="viewmap()">
+      View Map
+    </ion-button>
   </ion-card>
+  
 </ion-content>
 <ion-footer>
   <ion-grid style="padding: 0">

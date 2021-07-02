@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import { MenuController,Platform} from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
+import { RestApiService } from '../rest-api.service';
+import { Globals } from '../globals';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 @Component({
   selector: 'app-addresspage',
   templateUrl: './addresspage.page.html',
@@ -7,9 +13,73 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddresspagePage implements OnInit {
 
-  constructor() { }
+  private loading: any;
+  doorno:any;
+  address1:any;
+  address2:any;
+  area:any;
+  location:any;
+  geolatlang:any;
+
+  constructor(private router: Router,
+    public menu: MenuController,
+    public alertController: AlertController,
+    public loadingController: LoadingController,
+    private platform: Platform, 
+    private addressservice: RestApiService,
+    public globals: Globals,
+    private geolocation: Geolocation) { }
 
   ngOnInit() {
   }
-
+  ionViewWillEnter() {
+        this.geolocation.getCurrentPosition().then((resp) => {
+          console.log(resp.coords.latitude,resp.coords.longitude)
+        this.geolatlang= (resp.coords.latitude.toString()) + ","+ (resp.coords.longitude.toString());
+         }).catch((error) => {
+           console.log('Error getting location', error);
+         });
+     
+  }
+  SaveCustomerAddress()
+  {
+    console.log(this.globals.customerid,this.doorno , this.address1 , this.address2 , this.area , this.location, this.geolatlang)
+    if(this.doorno && this.address1 && this.address2 && this.area && this.location  && this.geolatlang)
+    {
+   
+    this.presentLoading();
+    this.addressservice.setCustomerAddressData(this.globals.customerid,this.doorno,this.address1,
+      this.address2,this.area,this.location,this.geolatlang).subscribe(
+      (res) => {
+        console.log(res);
+        setTimeout(() => { this.loading.dismiss();}, 2000);
+        if (res != '') {
+         // this.Productlist = res;
+         // console.log(this.Productlist);
+        }
+      },
+      (err) => {
+        console.log(err);
+        setTimeout(() => {this.loading.dismiss(); }, 2000);
+        this.presentAlert(err);
+      }
+    );
+  }
+  else
+  this.presentAlert("Enter All Fields")
+  }
+  async presentAlert(alertmessage: string) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      message: alertmessage,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      message: 'Loading....',
+    });
+    return await this.loading.present();
+  }
 }

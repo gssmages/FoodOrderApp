@@ -1,0 +1,16 @@
+{
+  "HEADER": {
+    "language": "भाषा",
+    "logout": "लॉग आउट"
+  },
+  "LOGIN": {
+    "head": "सिर",
+    "signup": "साइन अप करें",
+    "forgot": "भूल गए?",
+    "register": "पंजी",
+    "email": "ईमेल",
+    "password": "पारण शब्द",       
+    "newuser": "नया उपयोगकर्ता",
+    "language": "भाषा"
+  }
+}

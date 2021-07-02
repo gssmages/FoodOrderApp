@@ -5,6 +5,8 @@ import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { Globals } from '../globals';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import {formatDate} from '@angular/common';
+import { RestApiService } from '../rest-api.service';
 @Component({
   selector: 'app-detailpage',
   templateUrl: './detailpage.page.html',
@@ -13,7 +15,20 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 export class DetailpagePage implements OnInit {
   
   private loading: any;  
-  orderdetails:any;
+  orderdetails:any={};  
+  selectedproduct:any[]=[];
+  selectedaddress:any[]=[];
+
+  loginname:any;
+  loginmobile:any;
+  doorno:any;
+  address1:any;
+  address2:any;
+  area:any;
+  location:any;
+  geolatlang:any;
+  totalamt:any=0.0;
+  totalqty:any=0;
   constructor(
     private router: Router,
     public menu: MenuController,
@@ -21,7 +36,8 @@ export class DetailpagePage implements OnInit {
     public loadingController: LoadingController,
     private platform: Platform,
     public globals: Globals,
-    private geolocation: Geolocation) { }
+    private geolocation: Geolocation,    
+    private detailpageservice: RestApiService) { }
 
   ngOnInit() {
   }
@@ -31,15 +47,41 @@ export class DetailpagePage implements OnInit {
        // Catches the active view
        this.router.navigate(['/home']);
      });
-     
-     if(this.globals.Orderdetails.id==0)
+     this.selectedproduct = this.globals.selectedproduct;
+     this.selectedaddress = this.globals.selectedaddress;
+     this.loginname= this.globals.loginname;
+     this.loginmobile=this.globals.loginmobile;
+     this.doorno=this.selectedaddress[0].doorno;
+      this.address1=this.selectedaddress[0].address1;
+      this.address2=this.selectedaddress[0].address2;
+      this.area=this.selectedaddress[0].area;
+      this.location=this.selectedaddress[0].location;
+      this.geolatlang=this.selectedaddress[0].geolatlang;
+      
+     console.log( this.selectedproduct)
+
+     for(let i=0; i<this.selectedproduct.length; i++){
+     var total = parseFloat(this.selectedproduct[i].Qty) * parseFloat(this.selectedproduct[i].Price)
+     this.selectedproduct[i].total = total ;
+     this.totalamt += total; 
+     this.totalqty += this.selectedproduct[i].Qty;
+      }
+      console.log( this.selectedproduct)
+      console.log( this.totalamt)
+     if(this.globals.neworder==true)
      {
+      
+       
+       console.log(this.orderdetails)
         console.log("from Homepage");
-        this.geolocation.getCurrentPosition().then((resp) => {
-          console.log(resp.coords.latitude,resp.coords.longitude)
-         }).catch((error) => {
-           console.log('Error getting location', error);
-         });
+        this.orderdetails.orderid = formatDate(Date.now(),'yyyyMMdd_hhmmss','en-US');
+        this.orderdetails.custid= this.globals.customerid;
+        this.orderdetails.deliverymanid="";
+        this.orderdetails.status="InProgress";
+        this.orderdetails.Products=this.selectedproduct;
+        this.orderdetails.addressid=this.selectedaddress[0]._id;
+        this.globals.Orderdetails = this.orderdetails;
+        console.log(this.orderdetails) 
      }
      else
      {
@@ -53,8 +95,27 @@ export class DetailpagePage implements OnInit {
   }
 
   confirmorder()
+  {    
+    this.presentLoading();
+    this.detailpageservice.SaveOrdersData().subscribe(
+      (res) => {
+        //console.log(res);
+        setTimeout(() => { this.loading.dismiss();}, 2000);
+        if (res != '') {
+          this.presentAlert("Your Order Placed Succesfully"); 
+          this.router.navigate(['/home']);
+        }
+      },
+      (err) => {
+        console.log(err);
+        setTimeout(() => {this.loading.dismiss(); }, 2000);
+        this.presentAlert(err);
+      }
+    );
+  }
+  viewmap()
   {
-    this.presentAlert("Your Order Placed Succesfully");
+    this.router.navigate(['/viewmap']);
   }
   async presentAlert(alertmessage: string) {
     const alert = await this.alertController.create({

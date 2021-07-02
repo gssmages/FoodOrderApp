@@ -4,9 +4,9 @@
       <ion-content  style="background:url('assets/pagebg.jpg') bottom /100% 100%  no-repeat; --background:transparent;">
         <div style="background: rgba(255,255,255,0.85); width: 100%; height: 100%;">
         <ion-list id="inbox-list" style="background: none;">
-          <ion-list-header>Magesh Babu S </ion-list-header>
-          <ion-note>9442778471</ion-note>
-          <ion-note>magesh_123456789@gmail.com</ion-note>
+          <ion-list-header>{{globals.loginname}}</ion-list-header>
+          <ion-note>{{globals.loginmobile}}</ion-note>
+          <ion-note>{{globals.loginemail}}</ion-note>
           <ion-item-divider style="--background: transparent;">
           </ion-item-divider>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
