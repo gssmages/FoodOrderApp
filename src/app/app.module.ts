@@ -13,6 +13,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateConfigService } from './translate-config.service';
+import { DatePipe } from '@angular/common';
 export function LanguageLoader(http: HttpClient) {
 return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -31,6 +32,7 @@ return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
     Globals,
     Geolocation,
     TranslateConfigService,
+    DatePipe,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content style="background:url('assets/pagebg.jpg') bottom /100% 100%  no-repeat; --background:transparent;">
 
-<ion-card (click)="gotodetailpage()" >   
+<ion-card (click)="gotodetailpage()" *ngFor="let item of OrderAssignedlist; let i = index" >   
     <ion-row> 
     <ion-col size="2" class="ion-text-center" style="font-size:xx-large; padding: 1rem;" >
       <ion-icon name="basket-outline" ></ion-icon>
@@ -16,16 +16,16 @@
     <ion-col size="10" style="color: #555;">
       <ion-row>
         <ion-col>
-          <h4 style="margin: 0;">Perambur</h4>
+          <h4 style="margin: 0;">{{item.address[0].location}}</h4>
       </ion-col></ion-row>
       <ion-row>
-        <ion-col size="8">Magesh Babu S Babu S</ion-col>
-        <ion-col class="ion-text-right">Qty : 5</ion-col>
+        <ion-col size="8">{{item.customername}}</ion-col>
+        <ion-col class="ion-text-right">Qty : {{item.totalqty}}</ion-col>
       </ion-row>     
      </ion-col>           
   </ion-row>
 </ion-card>
-<ion-card>   
+<!-- <ion-card>   
   <ion-row> 
   <ion-col size="2" class="ion-text-center" style="font-size:xx-large; padding: 1rem;" >
     <ion-icon name="basket-outline" ></ion-icon>
@@ -126,6 +126,6 @@
     </ion-row>         
    </ion-col>           
 </ion-row>
-</ion-card>
+</ion-card> -->
 </ion-content>
 

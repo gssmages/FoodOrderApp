@@ -12,19 +12,38 @@ import { Globals } from '../globals';
 })
 export class DeliverymanpagePage implements OnInit {
   private loading: any;  
-  
+  OrderAssignedlist: any;
   constructor(private router: Router,
     public menu: MenuController,
     public alertController: AlertController,
     public loadingController: LoadingController,
     private platform: Platform,
-    public globals: Globals) { }
+    public globals: Globals,
+    private deliverymanservice: RestApiService) { }
 
   ngOnInit() {
+  }
+  ionViewWillEnter() {
+    this.presentLoading();
+    this.deliverymanservice.getDeliveryOrdersData("1").subscribe(
+      (res) => {
+        console.log(res);
+        setTimeout(() => { this.loading.dismiss();}, 2000);
+        if (res != '') {
+         this.OrderAssignedlist = res;
+        }
+      },
+      (err) => {
+        console.log(err);
+        setTimeout(() => {this.loading.dismiss(); }, 2000);
+        this.presentAlert(err);
+      }
+    );
   }
   gotodetailpage()
   {
     this.globals.neworder=false;    
+    this.globals.Orderdetails = this.OrderAssignedlist;
     this.router.navigate(['/detailpage']);  
   }
   async presentAlert(alertmessage: string) {

@@ -47,6 +47,10 @@ export class DetailpagePage implements OnInit {
        // Catches the active view
        this.router.navigate(['/home']);
      });
+     
+     if(this.globals.neworder==true)
+     {
+      console.log("from Homepage");
      this.selectedproduct = this.globals.selectedproduct;
      this.selectedaddress = this.globals.selectedaddress;
      this.loginname= this.globals.loginname;
@@ -68,24 +72,44 @@ export class DetailpagePage implements OnInit {
       }
       console.log( this.selectedproduct)
       console.log( this.totalamt)
-     if(this.globals.neworder==true)
-     {
-      
        
        console.log(this.orderdetails)
-        console.log("from Homepage");
+        
         this.orderdetails.orderid = formatDate(Date.now(),'yyyyMMdd_hhmmss','en-US');
         this.orderdetails.custid= this.globals.customerid;
         this.orderdetails.deliverymanid="";
         this.orderdetails.status="InProgress";
         this.orderdetails.Products=this.selectedproduct;
-        this.orderdetails.addressid=this.selectedaddress[0]._id;
+        this.orderdetails.address=this.selectedaddress;
+        this.orderdetails.totalqty = this.totalqty;
+        this.orderdetails.customername = this.globals.loginname;
         this.globals.Orderdetails = this.orderdetails;
         console.log(this.orderdetails) 
      }
      else
      {
       console.log("Order id come from other page");
+      this.orderdetails = this.globals.Orderdetails;
+
+      this.selectedproduct = this.orderdetails[0].Products;
+      this.selectedaddress = this.orderdetails[0].address;
+      this.loginname= this.globals.loginname;
+      this.loginmobile=this.globals.loginmobile;
+      this.doorno=this.selectedaddress[0].doorno;
+       this.address1=this.selectedaddress[0].address1;
+       this.address2=this.selectedaddress[0].address2;
+       this.area=this.selectedaddress[0].area;
+       this.location=this.selectedaddress[0].location;
+       this.geolatlang=this.selectedaddress[0].geolatlang;
+
+       for(let i=0; i<this.selectedproduct.length; i++){
+        var total = parseFloat(this.selectedproduct[i].Qty) * parseFloat(this.selectedproduct[i].Price)
+        this.selectedproduct[i].total = total ;
+        this.totalamt += total; 
+        this.totalqty += this.selectedproduct[i].Qty;
+         }
+
+      
      }
   }
  

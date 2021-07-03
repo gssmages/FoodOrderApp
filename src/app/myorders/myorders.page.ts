@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { RestApiService } from '../rest-api.service';
 import { Globals } from '../globals';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-myorders',
   templateUrl: './myorders.page.html',
@@ -13,19 +14,41 @@ import { Globals } from '../globals';
 export class MyordersPage implements OnInit {
 
   private loading: any;  
+  OrderAssignedlist: any;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     public menu: MenuController,
     public alertController: AlertController,
     public loadingController: LoadingController,
-    private platform: Platform,public globals: Globals,) { }
+    private platform: Platform,
+    public globals: Globals,
+    private myordersservice: RestApiService,
+    private datePipe: DatePipe) { }
 
   ngOnInit() {
+  }
+  ionViewWillEnter() {
+    this.presentLoading();
+    this.myordersservice.getDeliveryOrdersData("1").subscribe(
+      (res) => {
+        console.log(res);
+        setTimeout(() => { this.loading.dismiss();}, 2000);
+        if (res != '') {
+         this.OrderAssignedlist = res;
+        }
+      },
+      (err) => {
+        console.log(err);
+        setTimeout(() => {this.loading.dismiss(); }, 2000);
+        this.presentAlert(err);
+      }
+    );
   }
   gotodetailpage()
   {
     this.globals.neworder=false;
-     
+    this.globals.Orderdetails = this.OrderAssignedlist;
     this.router.navigate(['/detailpage']);  
   }
   async presentAlert(alertmessage: string) {

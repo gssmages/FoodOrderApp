@@ -3,15 +3,18 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Globals } from './globals';
-
-const ProductlistURL="http://localhost:3001/Products";
-const CustomerAddressURL="http://localhost:3001/customeraddress/custid/";
-const SaveCustomerAddressURL="http://localhost:3001/customeraddress/";
-const CustomerLoginURL="http://localhost:3001/customers/login";
-const CheckMobileURL="http://localhost:3001/customers/checkmobile";
-const RegisterCustomerURL="http://localhost:3001/customers";
-const AdminURL="http://localhost:3001/admin";
-const OrdersURL="http://localhost:3001/orders";
+const server = "https://foodorderapi.glitch.me/"
+//const server = "http://localhost:3001/"
+const ProductlistURL=server+"Products";
+const CustomerAddressURL=server+"customeraddress/custid/";
+const SaveCustomerAddressURL=server+"customeraddress/";
+const CustomerLoginURL=server+"customers/login";
+const CheckMobileURL=server+"customers/checkmobile";
+const RegisterCustomerURL=server+"customers";
+const AdminURL=server+"admin";
+const OrdersURL=server+"orders";
+const CustomerURL = server+"customers/"
+const UpdateCustomerURL = server+"customers/update/"
 @Injectable({
   providedIn: 'root'
 })
@@ -101,4 +104,22 @@ export class RestApiService {
      const body = this.globals.Orderdetails;
    return this.http.post(OrdersURL,body).pipe(catchError(this.handleError));
    }
+   getDeliveryOrdersData(custid:string): Observable<any>{
+    let params = new HttpParams()
+  return this.http.get(OrdersURL,{params}).pipe(catchError(this.handleError));
+  }
+  EditCustomerData(mobile:string,password:string,email:string,name:string,custid:string): Observable<any>{
+    // let params = new HttpParams()
+     const body = {
+       "mobile":mobile,
+       "password": password,
+       "name": name,      
+       "email": email
+   };
+   return this.http.patch(UpdateCustomerURL+custid,body).pipe(catchError(this.handleError));
+  }
+  getCustomerData(custid:string): Observable<any>{
+    let params = new HttpParams()
+  return this.http.get(CustomerURL+custid,{params}).pipe(catchError(this.handleError));
+  }
 }

@@ -114,13 +114,13 @@
       </ion-card-content>
     </ion-col>
     </ion-row>
-    <ion-button  expand="block"  color="secondary"  style="height: 48px"  (click)="viewmap()">
+    <ion-button  *ngIf="!globals.neworder" expand="block"  color="secondary"  style="height: 48px"  (click)="viewmap()">
       View Map
     </ion-button>
   </ion-card>
   
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="globals.neworder"> 
   <ion-grid style="padding: 0">
     <ion-row style="padding: 0">
       <ion-col style="padding: 0">
