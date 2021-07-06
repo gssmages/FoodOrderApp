@@ -8,16 +8,16 @@
 </ion-header>
 <ion-content style="background: url('assets/pagebg.jpg') bottom / 100% 100% no-repeat;--background: transparent;">
   <ion-card>
-    <ion-card-header>
-      <ion-card-title
-        > Ordered Products
-        <span style="float: right; font-size:xx-large;">
-          <ion-icon name="basket-outline" slot="start"></ion-icon>
-        </span>
-      </ion-card-title>
-     
+    <ion-card-header class="ion-no-padding">
+      <ion-card-title class="ion-padding-horizontal ion-padding-top">        
+        <ion-row>
+          <ion-col size="2" class="ion-no-padding" > <span style="float: left; font-size:xx-large;">
+            <ion-icon name="basket-outline" slot="start"></ion-icon>
+          </span> </ion-col>
+          <ion-col size="10" class="ion-no-padding" style="line-height: 35px;"> Ordered Products</ion-col>
+        </ion-row>       
+      </ion-card-title>     
     </ion-card-header>
-
     <ion-card-content>
       <ion-row *ngFor="let item of selectedproduct; let i = index" >
         <ion-col size="7"> {{item.ProductName}}({{ item.Price }})</ion-col>

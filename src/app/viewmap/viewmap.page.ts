@@ -74,10 +74,9 @@ export class ViewmapPage implements OnInit {
     };
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
-
-    let marker: Marker = this.map.addMarkerSync({
-      title:  this.loginname + '<br>' + this.loginmobile + '<br>' + this.doorno +
-       this.address1 + this.address2 + '<br>' + this.area + '<br>' + this.location,
+    
+     let marker: Marker = this.map.addMarkerSync({
+      title:  this.loginname +'\n\n' + this.loginmobile +'\n\n' + this.doorno + this.address1 + this.address2 + this.area +'\n\n' + this.location ,
       icon: 'green',
       animation: 'DROP',
       position: {
@@ -85,9 +84,10 @@ export class ViewmapPage implements OnInit {
         lng: this.longitude
       }
     });
-    marker.showInfoWindow();
+    marker.showInfoWindow()
     marker.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
+      //infowindow.open(marker)
       //alert('clicked');
-    });
+    }); 
   }
 }
