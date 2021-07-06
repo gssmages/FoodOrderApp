@@ -123,10 +123,11 @@ export class RestApiService {
     let params = new HttpParams()
   return this.http.get(CustomerURL+custid,{params}).pipe(catchError(this.handleError));
   }
-  SetDefaultCustomerAddressData(addressid:string): Observable<any>{
+  SetDefaultCustomerAddressData(addressid:string,custid:string): Observable<any>{
     // let params = new HttpParams()
     const body = {
-      "default":true
+      "default":true,
+      "custid":custid
     };
    return this.http.patch(setDefaultCustomerAddressURL+addressid,body).pipe(catchError(this.handleError));
   }

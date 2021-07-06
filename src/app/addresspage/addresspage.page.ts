@@ -24,6 +24,7 @@ export class AddresspagePage implements OnInit {
   CustomerAddressList:any;
   custid="60dc70bb15541034d46902f9";
   selectedaddressid:any;
+  selectedaddresscustid:any;
   constructor(private router: Router,
     public menu: MenuController,
     public alertController: AlertController,
@@ -105,6 +106,7 @@ export class AddresspagePage implements OnInit {
       {
         this.CustomerAddressList[k].default= true;
         this.selectedaddressid= this.CustomerAddressList[k]._id;
+        this.selectedaddresscustid = this.CustomerAddressList[k].custid;
       }      
     }
     
@@ -115,7 +117,7 @@ export class AddresspagePage implements OnInit {
     if(this.CustomerAddressList != undefined )
     {   
       this.presentLoading();
-      this.addressservice.SetDefaultCustomerAddressData(this.selectedaddressid).subscribe(
+      this.addressservice.SetDefaultCustomerAddressData(this.selectedaddressid,this.selectedaddresscustid).subscribe(
         (res) => {
           console.log(res);
           setTimeout(() => { this.loading.dismiss();}, 2000);

@@ -38,8 +38,8 @@ export class HomePage implements OnInit {
     //this.globals.customerid
     this.selectedproduct=[];
     this.selectedaddress=[];
-   
-     if(this.globals.selectedaddress != null || this.globals.selectedaddress != undefined)
+    //console.log(this.globals.neworder)
+     if(this.globals.neworder == true)
     {
       //console.log(this.globals.selectedaddress,this.globals.selectedproduct)
       for(let i = 0; i < this.CustomerAddressList.length; i++) {        
