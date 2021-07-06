@@ -4,7 +4,7 @@ import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular
 import { catchError, tap, map } from 'rxjs/operators';
 import { Globals } from './globals';
 const server = "https://foodorderapi.glitch.me/"
-//const server = "http://localhost:3001/"
+//const server = "http://localhost:5000/"
 const ProductlistURL=server+"Products";
 const CustomerAddressURL=server+"customeraddress/custid/";
 const SaveCustomerAddressURL=server+"customeraddress/";
@@ -15,6 +15,7 @@ const AdminURL=server+"admin";
 const OrdersURL=server+"orders";
 const CustomerURL = server+"customers/"
 const UpdateCustomerURL = server+"customers/update/"
+const setDefaultCustomerAddressURL = server+"customeraddress/update/"
 @Injectable({
   providedIn: 'root'
 })
@@ -55,7 +56,7 @@ export class RestApiService {
   getCustomerAddressData(custid:string): Observable<any>{
     let params = new HttpParams()
   return this.http.get(CustomerAddressURL+custid,{params}).pipe(catchError(this.handleError));
-  }
+  } 
   getCustomerLoginData(mobile:string,password:string): Observable<any>{
     //let params = new HttpParams()
     const body = {
@@ -121,5 +122,12 @@ export class RestApiService {
   getCustomerData(custid:string): Observable<any>{
     let params = new HttpParams()
   return this.http.get(CustomerURL+custid,{params}).pipe(catchError(this.handleError));
+  }
+  SetDefaultCustomerAddressData(addressid:string): Observable<any>{
+    // let params = new HttpParams()
+    const body = {
+      "default":true
+    };
+   return this.http.patch(setDefaultCustomerAddressURL+addressid,body).pipe(catchError(this.handleError));
   }
 }

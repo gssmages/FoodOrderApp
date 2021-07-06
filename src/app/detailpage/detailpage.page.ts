@@ -5,7 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { Globals } from '../globals';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import {formatDate} from '@angular/common';
+import { formatDate } from '@angular/common';
 import { RestApiService } from '../rest-api.service';
 @Component({
   selector: 'app-detailpage',
@@ -62,7 +62,7 @@ export class DetailpagePage implements OnInit {
       this.location=this.selectedaddress[0].location;
       this.geolatlang=this.selectedaddress[0].geolatlang;
       
-     console.log( this.selectedproduct)
+     //console.log( this.selectedproduct)
 
      for(let i=0; i<this.selectedproduct.length; i++){
      var total = parseFloat(this.selectedproduct[i].Qty) * parseFloat(this.selectedproduct[i].Price)
@@ -70,10 +70,10 @@ export class DetailpagePage implements OnInit {
      this.totalamt += total; 
      this.totalqty += this.selectedproduct[i].Qty;
       }
-      console.log( this.selectedproduct)
-      console.log( this.totalamt)
+     // console.log( this.selectedproduct)
+      //console.log( this.totalamt)
        
-       console.log(this.orderdetails)
+//console.log(this.orderdetails)
         
         this.orderdetails.orderid = formatDate(Date.now(),'yyyyMMdd_hhmmss','en-US');
         this.orderdetails.custid= this.globals.customerid;
@@ -84,15 +84,16 @@ export class DetailpagePage implements OnInit {
         this.orderdetails.totalqty = this.totalqty;
         this.orderdetails.customername = this.globals.loginname;
         this.globals.Orderdetails = this.orderdetails;
-        console.log(this.orderdetails) 
+       // console.log(this.orderdetails) 
      }
      else
      {
       console.log("Order id come from other page");
+      console.log(this.globals.Orderdetails)
       this.orderdetails = this.globals.Orderdetails;
 
-      this.selectedproduct = this.orderdetails[0].Products;
-      this.selectedaddress = this.orderdetails[0].address;
+      this.selectedproduct = this.orderdetails.Products;
+      this.selectedaddress = this.orderdetails.address;
       this.loginname= this.globals.loginname;
       this.loginmobile=this.globals.loginmobile;
       this.doorno=this.selectedaddress[0].doorno;

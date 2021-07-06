@@ -36,35 +36,63 @@ export class HomePage implements OnInit {
       this.router.navigate(['/home']);
     });
     //this.globals.customerid
-    this.homeservice.getCustomerAddressData(this.custid).subscribe(
-      (res) => {
-        //console.log(res);       
-        if (res != '') {
-          this.CustomerAddressList = res;
-         // console.log(this.CustomerAddressList);
+    this.selectedproduct=[];
+    this.selectedaddress=[];
+   
+     if(this.globals.selectedaddress != null || this.globals.selectedaddress != undefined)
+    {
+      //console.log(this.globals.selectedaddress,this.globals.selectedproduct)
+      for(let i = 0; i < this.CustomerAddressList.length; i++) {        
+        if (this.CustomerAddressList[i]._id == this.globals.selectedaddress[0]._id) {
+         // console.log(this.CustomerAddressList[i]._id,this.globals.selectedaddress[0]._id)
+            this.deliveryto = this.CustomerAddressList[i]._id;
         }
-      },
-      (err) => {
-        console.log(err);       
-        this.presentAlert(err);
       }
-    );
-    this.presentLoading();
-    this.homeservice.getProductlistData().subscribe(
-      (res) => {
-        //console.log(res);
-        setTimeout(() => { this.loading.dismiss();}, 2000);
-        if (res != '') {
-          this.Productlist = res;
-         // console.log(this.Productlist);
+      for (let j= 0; j < this.Productlist.length; j++) {  
+        for(let k=0;k<this.globals.selectedproduct.length;k++)      
+        if (this.Productlist[j]._id == this.globals.selectedproduct[k]._id) {
+          //console.log(this.CustomerAddressList[i]._id,this.globals.selectedaddress[0]._id)
+            this.Productlist[j].Qty = this.globals.selectedproduct[k].Qty;
         }
-      },
-      (err) => {
-        console.log(err);
-        setTimeout(() => {this.loading.dismiss(); }, 2000);
-        this.presentAlert(err);
       }
-    );
+    }
+    else
+    {
+      this.homeservice.getCustomerAddressData(this.globals.customerid).subscribe(
+        (res) => {
+         // console.log(res);       
+          if (res != '') {
+            this.CustomerAddressList = res; 
+            for (let i = 0; i < this.CustomerAddressList.length; i++) {
+              if (this.CustomerAddressList[i].default == true) {
+                this.deliveryto = this.CustomerAddressList[i]._id;
+              }
+            }         
+          }
+        },
+        (err) => {
+          console.log(err);       
+          this.presentAlert(err);
+        }
+      );
+      this.presentLoading();
+      this.homeservice.getProductlistData().subscribe(
+        (res) => {
+          //console.log(res);
+          setTimeout(() => { this.loading.dismiss();}, 2000);
+          if (res != '') {
+            this.Productlist = res;
+           // console.log(this.Productlist);
+          }
+        },
+        (err) => {
+          console.log(err);
+          setTimeout(() => {this.loading.dismiss(); }, 2000);
+          this.presentAlert(err);
+        }
+      );
+     
+    }
   }
   increment(item) {
     //console.log(item);
@@ -109,11 +137,11 @@ export class HomePage implements OnInit {
           this.selectedaddress.push(this.CustomerAddressList[k])
         }
       }
-      console.log(this.selectedproduct)
-      console.log(this.selectedaddress)
+     // console.log(this.selectedproduct)
+      //console.log(this.selectedaddress)
       if(prodselected)
       {
-        console.log(this.deliveryto)
+       // console.log(this.deliveryto)
         this.globals.selectedproduct = this.selectedproduct;
         this.globals.selectedaddress = this.selectedaddress;
         this.globals.neworder = true;

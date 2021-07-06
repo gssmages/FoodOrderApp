@@ -5,37 +5,39 @@
     </ion-buttons>
     <ion-title>My Addresses</ion-title>
     <ion-buttons (click)="clickedSearch()" slot="end">
-      <ion-button >
-      <ion-icon slot="icon-only" name="create"></ion-icon>
+      <ion-button (click)="showAllAddress()">
+        <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>    
+    </ion-button>
+      <ion-button (click)="allowEdit()">
+        <ion-icon slot="icon-only" name="mail-unread-outline"></ion-icon>    
     </ion-button>
     </ion-buttons>    
   </ion-toolbar>
 </ion-header>
 <ion-content style="background: url('assets/pagebg.jpg') bottom / 100% 100% no-repeat;--background: transparent;">
+  <div *ngIf="!isEdit">
   <ion-toolbar  color="secondary">   
     <ion-title><ion-icon name="checkmark-circle-outline"></ion-icon>  Select Default Address</ion-title>
   </ion-toolbar>
-  <div >
     <ion-grid class="ion-no-padding"> 
-          <ion-card>
-            <ion-row class="ion-padding-vertical">
+          <ion-card  *ngFor="let item of CustomerAddressList; let i = index" >
+            <ion-row class="ion-padding-vertical"  (click)="setdefault(i)">
               <ion-col size="2" class="ion-text-center" >
-                 <ion-icon name="checkmark-circle-outline" class="selected" style="font-size:32px; margin-top: 10px;"></ion-icon>
+                 <ion-icon name="checkmark-circle-outline" *ngIf="item.default==true" class="selected" style="font-size:32px; margin-top: 10px;"></ion-icon>
+                 <ion-icon name="ellipse-outline" *ngIf="item.default==false" class="nonselected" style="font-size:32px;margin-top: 10px;"></ion-icon>
                 </ion-col>
               <ion-col size="10"> 
                 <ion-card-header class="ion-no-padding">
-                <ion-card-title>Magesh Babu S</ion-card-title>
+                <ion-card-title>{{globals.loginname}}</ion-card-title>
               </ion-card-header>          
               <ion-card-content class="ion-no-padding">
-                <p>No: 57, Coimbatore Road, 
-                  2nd Cross, Metupalayam Road, 
-                  Metupalayam -623234. 
+                <p>{{item.doorno}},{{item.address1}},{{item.address2}}<br>{{item.area}}<br>{{item.location}}
                 </p>
               </ion-card-content>
             </ion-col>
             </ion-row>
           </ion-card>
-          <ion-card>
+         <!--  <ion-card>
             <ion-row class="ion-padding-vertical">
               <ion-col size="2" class="ion-text-center" >
                  <ion-icon name="ellipse-outline" class="nonselected" style="font-size:32px; margin-top: 10px;"></ion-icon>
@@ -52,10 +54,10 @@
               </ion-card-content>
             </ion-col>
             </ion-row>
-          </ion-card>
+          </ion-card> -->
     </ion-grid>
   </div>
-  <ion-card>
+  <ion-card  *ngIf="isEdit">
     <ion-card-header>
       <ion-card-title>Delivery Address</ion-card-title>
       <ion-card-subtitle>All Are Mandatory</ion-card-subtitle>
@@ -99,7 +101,7 @@
 <ion-footer>
   <ion-grid style="padding: 0">
     <ion-row style="padding: 0">
-      <ion-col style="padding: 0">
+      <ion-col *ngIf="isEdit" style="padding: 0">
         <ion-button
           expand="full"
           color="primary"
@@ -107,6 +109,16 @@
           (click)="SaveCustomerAddress()"
         >
           Save Address
+        </ion-button>
+      </ion-col>
+      <ion-col *ngIf="!isEdit" style="padding: 0">
+        <ion-button
+          expand="full"
+          color="primary"
+          style="--margin-top: 0; --margin-bottom: 0; margin: 0; height: 48px"
+          (click)="setdefaultaddress()"
+        >
+          Set Default Address
         </ion-button>
       </ion-col>
     </ion-row>

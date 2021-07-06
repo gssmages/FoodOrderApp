@@ -45,10 +45,10 @@ export class MyordersPage implements OnInit {
       }
     );
   }
-  gotodetailpage()
+  gotodetailpage(item)
   {
     this.globals.neworder=false;
-    this.globals.Orderdetails = this.OrderAssignedlist;
+    this.globals.Orderdetails = item;
     this.router.navigate(['/detailpage']);  
   }
   async presentAlert(alertmessage: string) {

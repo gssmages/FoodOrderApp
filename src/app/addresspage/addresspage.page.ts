@@ -20,7 +20,10 @@ export class AddresspagePage implements OnInit {
   area:any;
   location:any;
   geolatlang:any;
-
+  isEdit:boolean = false;
+  CustomerAddressList:any;
+  custid="60dc70bb15541034d46902f9";
+  selectedaddressid:any;
   constructor(private router: Router,
     public menu: MenuController,
     public alertController: AlertController,
@@ -39,7 +42,32 @@ export class AddresspagePage implements OnInit {
          }).catch((error) => {
            console.log('Error getting location', error);
          });
-     
+         this.presentLoading();
+         this.addressservice.getCustomerAddressData(this.globals.customerid).subscribe(
+           (res) => {
+             console.log(res);
+             setTimeout(() => { this.loading.dismiss();}, 2000);
+             if (res.length != 0) {
+              this.isEdit = false;
+              this.CustomerAddressList = res;
+             }
+             else
+             this.isEdit = true;
+           },
+           (err) => {
+             console.log(err);
+             setTimeout(() => {this.loading.dismiss(); }, 2000);
+             this.presentAlert(err);
+           }
+         );
+  }
+  allowEdit()
+  {
+    this.isEdit = true;
+  }
+  showAllAddress()
+  {
+    this.isEdit = false;
   }
   SaveCustomerAddress()
   {
@@ -67,6 +95,42 @@ export class AddresspagePage implements OnInit {
   }
   else
   this.presentAlert("Enter All Fields")
+  }
+  setdefault(index)
+  {
+    for(let k=0;k<this.CustomerAddressList.length;k++)
+    {
+      this.CustomerAddressList[k].default= false;
+      if(k==index)
+      {
+        this.CustomerAddressList[k].default= true;
+        this.selectedaddressid= this.CustomerAddressList[k]._id;
+      }      
+    }
+    
+  }
+  setdefaultaddress()
+  {
+    console.log( this.CustomerAddressList)
+    if(this.CustomerAddressList != undefined )
+    {   
+      this.presentLoading();
+      this.addressservice.SetDefaultCustomerAddressData(this.selectedaddressid).subscribe(
+        (res) => {
+          console.log(res);
+          setTimeout(() => { this.loading.dismiss();}, 2000);
+          if (res != '') {
+          }
+        },
+        (err) => {
+          console.log(err);
+          setTimeout(() => {this.loading.dismiss(); }, 2000);
+          this.presentAlert(err);
+        }
+      );
+   }
+   else
+   this.presentAlert("Address List Empty !!")
   }
   async presentAlert(alertmessage: string) {
     const alert = await this.alertController.create({

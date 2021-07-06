@@ -202,7 +202,7 @@ db.CustomerAddress.insertOne(
 
 db.CustomerAddress.find()
 
-db.CustomerAddress.updateMany({},{$set: {"custid":"60dc70bb15541034d46902f9"}})
+db.CustomerAddress.updateMany({},{$set: {"default": false}})
 
 db.CustomerAddress.find({'custid':'3453434'})
 
