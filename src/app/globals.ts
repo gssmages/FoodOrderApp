@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import {Subject} from 'rxjs';
 @Injectable()
 export class Globals {
   Orderdetails: any;
@@ -14,7 +14,16 @@ export class Globals {
   customerid:string;
 
   neworder:any;
-  /* mobilenumber: string;
   appversion: string;
-  geowatcher:any; */
+
+  private appPages = new Subject<any>();
+
+  publishAppPages(data: any) {
+      this.appPages.next(data);
+  }
+
+  getObservable(): Subject<any> {
+    return this.appPages;
+}
+  /* mobilenumber: string;  geowatcher:any; */
 }

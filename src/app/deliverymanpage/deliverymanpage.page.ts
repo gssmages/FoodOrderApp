@@ -12,7 +12,8 @@ import { Globals } from '../globals';
 })
 export class DeliverymanpagePage implements OnInit {
   private loading: any;  
-  OrderAssignedlist: any;
+  OrderAssignedlist: any;  
+  deliverymanid:any;//="60ce02ed49af6759f0bb6996";
   constructor(private router: Router,
     public menu: MenuController,
     public alertController: AlertController,
@@ -24,10 +25,11 @@ export class DeliverymanpagePage implements OnInit {
   ngOnInit() {
   }
   ionViewWillEnter() {
+    this.deliverymanid = this.globals.customerid;
     this.presentLoading();
-    this.deliverymanservice.getDeliveryOrdersData("1").subscribe(
+    this.deliverymanservice.getOrderByDeliveryManData(this.deliverymanid).subscribe(
       (res) => {
-        console.log(res);
+        //console.log(res);
         setTimeout(() => { this.loading.dismiss();}, 2000);
         if (res != '') {
          this.OrderAssignedlist = res;

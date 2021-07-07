@@ -1,6 +1,6 @@
 <ion-header >
   <ion-toolbar color="primary" >
-    <ion-title class="ion-text-center">{{ logintitle }}</ion-title>
+    <ion-title class="ion-text-center">{{ logintitle }} </ion-title><span class="versionno">Ver -  1.0.0</span>
   </ion-toolbar>
 </ion-header><!-- style="--background: url('assets/driverbg.jpg') top center/100% 100% no-repeat" -->
 <ion-content class="ion-padding"  style=" background:url('assets/pagebg.jpg') bottom / 100% no-repeat; --background:transparent;">
@@ -22,7 +22,11 @@
      <ion-item style="--background: #ffffff;color: #2f8327; margin-top: 10px;--border-color: #2f8327" >
         <ion-icon name="key-outline"  style="color: #2f8327;"></ion-icon>
         <ion-input  [(ngModel)]="password" placeholder="Enter Password" type="password" (keyup)="getvalidpassword($event)" ></ion-input>
-      </ion-item>        
+      </ion-item>   
+      <ion-item style="--background: none; margin-top: 10px;" lines="none">
+        <ion-label>Delivery Man</ion-label>
+        <ion-toggle [(ngModel)]="deliveryman"></ion-toggle>
+      </ion-item> 
       <ion-button expand="block" (click)="login()" color="primary" style="margin-top: 10px;">{{ logintitle }}</ion-button>
       <p (click)="newuser()" style="text-decoration: underline;color: #2f8327; text-align: right; font-size:.9rem;margin-top: 30px; cursor: pointer; text-shadow: #fff 0.1em 0.1em 0.2em; ">
         <strong>{{new_user}}</strong>
@@ -65,22 +69,13 @@
 
 </ion-content>
 <ion-footer>
-  <ion-item color="secondary">
+  <ion-item color="primary">
     <ion-label>{{language}}</ion-label>
     <ion-select (ionChange)='languageChange()' [(ngModel)]='languageselect' >
       <ion-select-option value="en">English</ion-select-option>
       <ion-select-option value="ta">தமிழ்</ion-select-option>
       <ion-select-option value="hi">हिंदी</ion-select-option>
     </ion-select>
-  </ion-item>
-  <ion-toolbar style="--padding-top:0;--padding-bottom:0;--padding-start:0;--padding-end:0;" color="primary">
-      <ion-grid style="padding: 0;">
-          <ion-row style="padding: 0;">
-              <ion-col   style="padding: 0;" class="ion-text-center">
-                  Ver - 1.0.0
-              </ion-col>
-          </ion-row>
-      </ion-grid>
-  </ion-toolbar>
+  </ion-item>  
 </ion-footer>
 

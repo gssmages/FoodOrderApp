@@ -74,9 +74,10 @@ export class ViewmapPage implements OnInit {
     };
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
-    
+
      let marker: Marker = this.map.addMarkerSync({
-      title:  this.loginname +'\n\n' + this.loginmobile +'\n\n' + this.doorno + this.address1 + this.address2 + this.area +'\n\n' + this.location ,
+      title:  this.loginname +'\n' + this.loginmobile +'\n' + this.doorno+', '
+       + this.address1+ ', ' +this.address2 + ', '+ this.area +'\n' + this.location ,
       icon: 'green',
       animation: 'DROP',
       position: {

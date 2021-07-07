@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Products</ion-title>
+    <ion-title>Food Order App</ion-title><span class="versionno">Ver -  1.0.0</span>
   </ion-toolbar>
 </ion-header>
 <ion-content style="background:url('assets/pagebg.jpg') bottom /100% 100%  no-repeat; --background:transparent;">
@@ -24,7 +24,7 @@
     <ion-col size="8" class="ion-no-padding" style="color: #555;">
       <div class="productname">{{item.ProductName}}</div>
       <ion-item>
-        <ion-label>Rs. 50 <span style="font-size: 10px;"> / {{item.Unit}}</span></ion-label>
+        <ion-label>Rs. {{item.Price}}<span style="font-size: 10px;"> / {{item.Unit}}</span></ion-label>
         <ion-icon name="remove-circle" (click)="decrement(item)" style="font-size:32px;"></ion-icon>
          <span style="font-size: 24px; padding: 0 5px;">{{item.Qty}}</span> 
           <ion-icon name="add-circle" (click)="increment(item)" style="font-size:32px;"></ion-icon>

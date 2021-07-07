@@ -43,10 +43,10 @@ export class DetailpagePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.platform.backButton.subscribe(async () => {
+   /*  this.platform.backButton.subscribe(async () => {
        // Catches the active view
        this.router.navigate(['/home']);
-     });
+     }); */
      
      if(this.globals.neworder==true)
      {

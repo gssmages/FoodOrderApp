@@ -7,6 +7,9 @@ import { TranslateConfigService } from '../translate-config.service';
 import { TranslateService } from '@ngx-translate/core';
 import { RestApiService } from '../rest-api.service';
 import { Globals } from '../globals';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -27,6 +30,8 @@ export class LoginPage implements OnInit {
   selectedLanguage:string;
   languageselect:any;
   logindetails:any;
+  deliveryman:boolean = false;
+  public appPages : Array<any> = [];
   /*******For Lang support********* */
   
   logintitle:any;
@@ -42,7 +47,10 @@ export class LoginPage implements OnInit {
     private translateconfigService: TranslateConfigService,
     private _translate: TranslateService,    
     private loginservice: RestApiService,
-    public globals: Globals
+    public globals: Globals,
+    private locationAccuracy: LocationAccuracy,
+    private geolocation: Geolocation,    
+    private androidPermissions: AndroidPermissions
     ) {
 
       this.selectedLanguage = this.translateconfigService.getDefaultLanguage();
@@ -58,14 +66,14 @@ export class LoginPage implements OnInit {
   ionViewWillEnter() { 
     this.menu.enable(false);
     this.backButtonSubscription = this.platform.backButton.subscribeWithPriority(9999,async () => {
-      this.router.navigate(['/login']);
+      //this.router.navigate(['/login']);
       // Catches the active view
       const activeView = this.router.url;  
       const urlParts = activeView.split('/');              
       // Checks if can go back before show up the alert
       if(urlParts.includes('login')) {        
               const alert = await  this.alertController.create({
-                  header: 'Goeasy Alert',
+                  header: 'Logout Alert',
                   message: 'Are you sure want to close this app?',
                   buttons: [{
                       text: 'No',
@@ -83,6 +91,7 @@ export class LoginPage implements OnInit {
           }
     });
     this.translateconfigService.getDefaultLanguage();
+    this.checkPermission();
    }
   ionViewDidLeave() {
     // enable the root left menu when leaving the tutorial page
@@ -253,6 +262,45 @@ export class LoginPage implements OnInit {
     {
       if(this.mobilenumber.toString().length == 10)
       {
+        console.log(this.deliveryman)
+        if(this.deliveryman == true)
+        {
+          console.log("delivery man service" )
+          this.presentLoading();
+          this.loginservice.getDeliveryManLoginData(this.mobilenumber,this.password).subscribe(
+            (res) => {
+             // console.log(res);
+              setTimeout(() => {
+                this.loading.dismiss();
+              }, 1000);
+              if (res.length != 0) {
+                this.logindetails = res[0];                
+                this.globals.logininfo=res[0];                
+                this.globals.loginname = this.logindetails.name;
+                this.globals.loginmobile = this.logindetails.mobile;
+                this.globals.loginemail = this.logindetails.email;
+                this.globals.customerid= this.logindetails._id;
+                this.router.navigate(['/deliverymanpage']);
+                this.appPages = [                 
+                  { title: 'Delivery Man', url: '/deliverymanpage', icon: 'home' },   
+                  { title: 'Logout', url: '/login', icon: 'log-out' }
+                ];
+                this.globals.publishAppPages(this.appPages);
+              }
+              else
+              this.presentAlert("Invalid Delivery Man Login.");
+            },
+            (err) => {
+              console.log(err);
+              setTimeout(() => {
+                this.loading.dismiss();
+              }, 2000);
+              this.presentAlert(err);
+            }
+          ); 
+        }
+       else{
+
         this.presentLoading();
           this.loginservice.getCustomerLoginData(this.mobilenumber,this.password).subscribe(
             (res) => {
@@ -262,14 +310,20 @@ export class LoginPage implements OnInit {
               }, 1000);
               if (res.length != 0) {
                 this.logindetails = res[0];                
-                this.globals.logininfo=res[0];
-                
+                this.globals.logininfo=res[0];                
                 this.globals.loginname = this.logindetails.name;
                 this.globals.loginmobile = this.logindetails.mobile;
                 this.globals.loginemail = this.logindetails.email;
                 this.globals.customerid= this.logindetails._id;
-                console.log(this.logindetails)
                 this.router.navigate(['/home']);
+                this.appPages = [
+                  { title: 'Home', url: '/home', icon: 'home' },    
+                  { title: 'My Profile', url: '/myprofile', icon: 'person' },
+                  { title: 'My Addresses', url: '/addresspage', icon: 'mail' },
+                  { title: 'My Orders', url: '/myorders', icon: 'basket' },
+                  { title: 'Logout', url: '/login', icon: 'log-out' }
+                ];
+                this.globals.publishAppPages(this.appPages);
               }
               else
               this.presentAlert("Invalid User.");
@@ -281,7 +335,8 @@ export class LoginPage implements OnInit {
               }, 2000);
               this.presentAlert(err);
             }
-          );
+          ); 
+        }
         
       }
       else{
@@ -296,6 +351,54 @@ export class LoginPage implements OnInit {
   languageChange(){
     this.translateconfigService.setLanguage(this.languageselect);
     this._initialiseTranslation();
+  }
+  checkPermission() {
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+      result => {
+        if (result.hasPermission) {
+          this.enableGPS();
+        } else {
+          this.locationAccPermission();
+        }
+      },
+      error => {
+        alert(error);
+      }
+    );
+  }
+
+  locationAccPermission() {
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if (canRequest) {
+      } else {
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+          .then(
+            () => {
+              this.enableGPS();
+            },
+            error => {
+              alert(error)
+            }
+          );
+      }
+    });
+  }
+
+  enableGPS() {
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      () => {
+        this.currentLocPosition()
+      },
+      error => alert(JSON.stringify(error))
+    );
+  }
+
+  currentLocPosition() {
+    this.geolocation.getCurrentPosition().then((response) => {
+     
+    }).catch((error) => {
+      alert('Error: ' + error);
+    });
   }
   async presentAlert(alertmessage: string) {
     const alert = await this.alertController.create({

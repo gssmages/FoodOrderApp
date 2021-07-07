@@ -30,7 +30,7 @@ export class MyordersPage implements OnInit {
   }
   ionViewWillEnter() {
     this.presentLoading();
-    this.myordersservice.getDeliveryOrdersData("1").subscribe(
+    this.myordersservice.getDeliveryOrdersData(this.globals.customerid).subscribe(
       (res) => {
         console.log(res);
         setTimeout(() => { this.loading.dismiss();}, 2000);

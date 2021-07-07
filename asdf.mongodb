@@ -24,7 +24,7 @@ db.Productlist.updateMany({},{$set: {"Qty":0}})
 
 db.Productlist.updateMany({},{$set: {"ProductImage":"fruit3.jpg"}})
 
-  db.Productlist.insertMany([{'ProductName':'Pasteurized Milk','Expiry':'11-July-2021','Qty': 0,'Unit':'Ltr','ProductImage': 'milk.jpg'}])
+  db.Productlist.insertMany([{'ProductName':'Seasonal Fruits','Expiry':'11-September-2021','Qty': 0,'Unit':'Kg','ProductImage': 'fruit3.jpg',"Price":"150.00","Active":true}])
 
 db.Productlist.insertMany([
       {
@@ -202,7 +202,7 @@ db.CustomerAddress.insertOne(
 
 db.CustomerAddress.find()
 
-db.CustomerAddress.updateMany({},{$set: {"default": false}})
+db.CustomerAddress.updateMany({custid:"60dc70bb15541034d46902f9"},{$set: {'name': 'Magesh Babu S','email':'magesh@gmail.com','mobile':'9442778471'}})
 
 db.CustomerAddress.find({'custid':'3453434'})
 
@@ -227,6 +227,7 @@ db.DeliveryMan.insertMany([
   'doorno':'342','address1':'address12342','address2':'Annanagar 1st street','area':'Annanagar east','Active':true }])
 
 db.DeliveryMan.find()
+db.DeliveryMan.update({name:"Sureshbabu"},{$set: {"password": "123456"}})
 
 db.Orders.insertMany([
   {'orderid':'20210600001',
@@ -242,7 +243,11 @@ db.Orders.insertMany([
 
 db.Orders.find();
 
-db.Orders.find( {"orderid": "20210600002" })
+db.Orders.find( {"deliverymanid": "60ced8842fdf502e08ef1a6b" })
+
+
+db.Orders.update({"custid": "60db224821538d560405d346"},{$set: {"deliverymanid": "60ced8842fdf502e08ef1a6b"}})
+db.Orders.update({},{$set: {"deliverymanid": "60ce02ed49af6759f0bb6996"}})
 
 db.Orders.find( { _id: { $in: [ ObjectId("60d03c204d555a4fc81d2d28") ] } })
 

@@ -3,8 +3,8 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Globals } from './globals';
-const server = "https://foodorderapi.glitch.me/"
-//const server = "http://localhost:5000/"
+//const server = "https://foodorderapi.glitch.me/"
+const server = "http://localhost:5000/"
 const ProductlistURL=server+"Products";
 const CustomerAddressURL=server+"customeraddress/custid/";
 const SaveCustomerAddressURL=server+"customeraddress/";
@@ -13,9 +13,12 @@ const CheckMobileURL=server+"customers/checkmobile";
 const RegisterCustomerURL=server+"customers";
 const AdminURL=server+"admin";
 const OrdersURL=server+"orders";
+const GetOrderByCustomerURL=server+"orders/custid/";
+const GetOrderByDeliveryManURL=server+"orders/deliverymanid/";
 const CustomerURL = server+"customers/"
 const UpdateCustomerURL = server+"customers/update/"
 const setDefaultCustomerAddressURL = server+"customeraddress/update/"
+const DeliveryManLoginURL = server + "deliverymans/login"
 @Injectable({
   providedIn: 'root'
 })
@@ -87,9 +90,12 @@ export class RestApiService {
    // const body = { title: 'Angular POST Request Example' };
   return this.http.get(AdminURL,{params}).pipe(catchError(this.handleError));
   }
-  setCustomerAddressData(custid:string,doorno:string,address1:string,address2:string,area:string,location:string,geolatlang:string): Observable<any>{
+  setCustomerAddressData(name:string,email:string,mobile:string,custid:string,doorno:string,address1:string,address2:string,area:string,location:string,geolatlang:string): Observable<any>{
     // let params = new HttpParams()
      const body = {
+       "name":name,
+       "email": email,
+       "mobile":mobile,
        "custid":custid,
        "location": location,
        "doorno": doorno,      
@@ -107,7 +113,11 @@ export class RestApiService {
    }
    getDeliveryOrdersData(custid:string): Observable<any>{
     let params = new HttpParams()
-  return this.http.get(OrdersURL,{params}).pipe(catchError(this.handleError));
+  return this.http.get(GetOrderByCustomerURL+custid,{params}).pipe(catchError(this.handleError));
+  }
+  getOrderByDeliveryManData(deliverymanid:string): Observable<any>{
+    let params = new HttpParams()
+  return this.http.get(GetOrderByDeliveryManURL+deliverymanid,{params}).pipe(catchError(this.handleError));
   }
   EditCustomerData(mobile:string,password:string,email:string,name:string,custid:string): Observable<any>{
     // let params = new HttpParams()
@@ -130,5 +140,13 @@ export class RestApiService {
       "custid":custid
     };
    return this.http.patch(setDefaultCustomerAddressURL+addressid,body).pipe(catchError(this.handleError));
+  }
+  getDeliveryManLoginData(mobile:string,password:string): Observable<any>{
+    //let params = new HttpParams()
+    const body = {
+      "mobile":mobile,
+      "password": password
+  };
+  return this.http.post(DeliveryManLoginURL,body).pipe(catchError(this.handleError));
   }
 }

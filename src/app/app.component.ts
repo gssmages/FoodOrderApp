@@ -9,14 +9,15 @@ export class AppComponent {
   loginname:any;
   loginmobile:any;
   loginemail:any;
-  public appPages = [
+  public appPages : Array<any> = []; 
+  /* public appPages = [
     { title: 'Home', url: '/home', icon: 'home' },    
     { title: 'Delivery Man', url: '/deliverymanpage', icon: 'home' },    
     { title: 'My Profile', url: '/myprofile', icon: 'person' },
     { title: 'My Addresses', url: '/addresspage', icon: 'mail' },
     { title: 'My Orders', url: '/myorders', icon: 'basket' },
     { title: 'Logout', url: '/login', icon: 'log-out' }
-  ];
+  ]; */
  /*  public appPages = [
     { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
     { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
@@ -27,7 +28,7 @@ export class AppComponent {
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders']; */
   constructor(public globals: Globals) {
-
+    this.globals.getObservable().subscribe((user) => { this.appPages = user; });
 
   }
 }

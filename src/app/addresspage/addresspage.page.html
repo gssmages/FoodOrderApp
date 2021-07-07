@@ -65,15 +65,15 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="stacked">Name</ion-label>
-        <ion-input placeholder="placeholder" readonly type="text" value="{{globals.loginname}}"></ion-input>
+        <ion-input placeholder="placeholder" type="text"  [(ngModel)]="name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Mobile Number</ion-label>
-        <ion-input placeholder="placeholder" readonly type="text" value="{{globals.loginmobile}}"></ion-input>
+        <ion-input placeholder="placeholder" type="number"  [(ngModel)]="mobile" (keyup)="getvalidmobileno($event)"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Email</ion-label>
-        <ion-input placeholder="placeholder" readonly type="text" value="{{globals.loginemail}}"></ion-input>
+        <ion-input placeholder="placeholder" type="text"  [(ngModel)]="email"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Multiple Inputs</ion-label>

@@ -18,7 +18,8 @@ export class HomePage implements OnInit {
   custid="60dc70bb15541034d46902f9";
   deliveryto:any;
   selectedproduct:any[]=[];
-  selectedaddress:any[]=[];
+  selectedaddress:any[]=[];  
+  backButtonSubscription:any;
   constructor(
     private router: Router,
     public menu: MenuController,
@@ -29,12 +30,37 @@ export class HomePage implements OnInit {
     public globals: Globals
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
+  ngOnDestroy() {
+    this.backButtonSubscription.unsubscribe();
+  }
   ionViewWillEnter() {
-    this.platform.backButton.subscribe(async () => {
+    this.backButtonSubscription = this.platform.backButton.subscribeWithPriority(9999,async () => {
       // Catches the active view
-      this.router.navigate(['/home']);
-    });
+      const activeView = this.router.url;  
+      const urlParts = activeView.split('/');              
+      // Checks if can go back before show up the alert
+      if(urlParts.includes('home')) {        
+              const alert = await  this.alertController.create({
+                  header: 'Logout Alert',
+                  message: 'Are you sure want to close this app?',
+                  buttons: [{
+                      text: 'No',
+                      role: 'cancel',
+                      handler: () => {                       
+                      }
+                  },{
+                      text: 'Yes',
+                      handler: () => {                        
+                        navigator['app'].exitApp();
+                      }
+                  }]
+              });
+              return await alert.present();
+          }
+        });
     //this.globals.customerid
     this.selectedproduct=[];
     this.selectedaddress=[];

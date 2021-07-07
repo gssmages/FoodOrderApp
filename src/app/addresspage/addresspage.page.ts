@@ -14,6 +14,9 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 export class AddresspagePage implements OnInit {
 
   private loading: any;
+  name:any=this.globals.loginname;
+  email:any=this.globals.loginemail;
+  mobile:any=this.globals.loginmobile;
   doorno:any;
   address1:any;
   address2:any;
@@ -62,6 +65,34 @@ export class AddresspagePage implements OnInit {
            }
          );
   }
+  validateemail()
+  {
+    if(this.email)
+    {
+          let valid:boolean; let regexp:any;
+          let value = this.email;
+          value = value.toString();
+          regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+          valid = regexp.test(value);
+          if(!valid)
+          {
+            this.email="";
+          }
+          else
+          return true;
+    }   
+  }
+  getvalidmobileno($event) {
+    //console.log(this.mobilenumber)
+    if (this.mobile) {
+      let value = this.mobile;
+      value = value.toString();
+      if (value.length > 10) {
+        $event.preventDefault()
+        this.mobile = parseInt(value.substring(0, 10));
+      }
+    }
+  }
   allowEdit()
   {
     this.isEdit = true;
@@ -71,31 +102,45 @@ export class AddresspagePage implements OnInit {
     this.isEdit = false;
   }
   SaveCustomerAddress()
-  {
-    console.log(this.globals.customerid,this.doorno , this.address1 , this.address2 , this.area , this.location, this.geolatlang)
-    if(this.doorno && this.address1 && this.address2 && this.area && this.location  && this.geolatlang)
+  {    
+    let validemail = this.validateemail();
+    if(this.mobile)
     {
-   
-    this.presentLoading();
-    this.addressservice.setCustomerAddressData(this.globals.customerid,this.doorno,this.address1,
-      this.address2,this.area,this.location,this.geolatlang).subscribe(
-      (res) => {
-        console.log(res);
-        setTimeout(() => { this.loading.dismiss();}, 2000);
-        if (res != '') {
-         // this.Productlist = res;
-         // console.log(this.Productlist);
+      if(this.mobile.toString().length == 10)
+      { 
+        if(validemail)
+        {
+          if(this.name && this.doorno && this.address1 && this.address2 && this.area && this.location  && this.geolatlang)
+          {   
+          this.presentLoading();
+          this.addressservice.setCustomerAddressData(this.name,this.email, this.mobile,this.globals.customerid,this.doorno,
+            this.address1,this.address2,this.area,this.location,this.geolatlang).subscribe(
+            (res) => {
+              console.log(res);
+              setTimeout(() => { this.loading.dismiss();}, 2000);
+              if (res != '') {
+                this.presentAlert("Address Saved Succesfully !!!")
+                this.clearAllFields();
+              }
+            },
+            (err) => {
+              console.log(err);
+              setTimeout(() => {this.loading.dismiss(); }, 2000);
+              this.presentAlert(err);
+            }
+          );
         }
-      },
-      (err) => {
-        console.log(err);
-        setTimeout(() => {this.loading.dismiss(); }, 2000);
-        this.presentAlert(err);
+        else
+        this.presentAlert("Enter All Fields")
+        }
+        else
+        this.presentAlert("Please enter valid Email");        
       }
-    );
-  }
-  else
-  this.presentAlert("Enter All Fields")
+      else{
+        this.presentAlert("Please Enter Valid 10 digit Mobile Number")
+      }
+    }
+    
   }
   setdefault(index)
   {
@@ -133,6 +178,14 @@ export class AddresspagePage implements OnInit {
    }
    else
    this.presentAlert("Address List Empty !!")
+  }
+  clearAllFields()
+  {
+    this.doorno=""
+    this.address1="";
+    this.address2="";
+    this.area="";
+    this.location="";
   }
   async presentAlert(alertmessage: string) {
     const alert = await this.alertController.create({
