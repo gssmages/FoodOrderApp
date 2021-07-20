@@ -19,6 +19,7 @@ const CustomerURL = server+"customers/"
 const UpdateCustomerURL = server+"customers/update/"
 const setDefaultCustomerAddressURL = server+"customeraddress/update/"
 const DeliveryManLoginURL = server + "deliverymans/login"
+const SaveOrderStatusURL=server+"orders/status/";
 @Injectable({
   providedIn: 'root'
 })
@@ -148,5 +149,12 @@ export class RestApiService {
       "password": password
   };
   return this.http.post(DeliveryManLoginURL,body).pipe(catchError(this.handleError));
+  }
+  SaveOrderStatusData(orderid:string): Observable<any>{
+    // let params = new HttpParams()
+    const body = {
+      "status":"Completed",
+    };
+   return this.http.patch(SaveOrderStatusURL+orderid,body).pipe(catchError(this.handleError));
   }
 }

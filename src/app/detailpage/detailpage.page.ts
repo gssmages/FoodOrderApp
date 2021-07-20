@@ -19,8 +19,8 @@ export class DetailpagePage implements OnInit {
   selectedproduct:any[]=[];
   selectedaddress:any[]=[];
 
-  loginname:any;
-  loginmobile:any;
+  name:any;
+  mobile:any;
   doorno:any;
   address1:any;
   address2:any;
@@ -53,8 +53,8 @@ export class DetailpagePage implements OnInit {
       console.log("from Homepage");
      this.selectedproduct = this.globals.selectedproduct;
      this.selectedaddress = this.globals.selectedaddress;
-     this.loginname= this.globals.loginname;
-     this.loginmobile=this.globals.loginmobile;
+     this.name= this.selectedaddress[0].name;
+     this.mobile=this.selectedaddress[0].mobile;
      this.doorno=this.selectedaddress[0].doorno;
       this.address1=this.selectedaddress[0].address1;
       this.address2=this.selectedaddress[0].address2;
@@ -78,10 +78,12 @@ export class DetailpagePage implements OnInit {
         this.orderdetails.orderid = formatDate(Date.now(),'yyyyMMdd_hhmmss','en-US');
         this.orderdetails.custid= this.globals.customerid;
         this.orderdetails.deliverymanid="";
+        this.orderdetails.deliverymanname="";
         this.orderdetails.status="InProgress";
         this.orderdetails.Products=this.selectedproduct;
         this.orderdetails.address=this.selectedaddress;
         this.orderdetails.totalqty = this.totalqty;
+        this.orderdetails.totalamt = this.totalamt;
         this.orderdetails.customername = this.globals.loginname;
         this.globals.Orderdetails = this.orderdetails;
        // console.log(this.orderdetails) 
@@ -89,13 +91,14 @@ export class DetailpagePage implements OnInit {
      else
      {
       console.log("Order id come from other page");
+      console.log(this.globals.deliveryman)
       console.log(this.globals.Orderdetails)
       this.orderdetails = this.globals.Orderdetails;
 
       this.selectedproduct = this.orderdetails.Products;
       this.selectedaddress = this.orderdetails.address;
-      this.loginname= this.globals.loginname;
-      this.loginmobile=this.globals.loginmobile;
+      this.name= this.selectedaddress[0].name;
+      this.mobile=this.selectedaddress[0].mobile;
       this.doorno=this.selectedaddress[0].doorno;
        this.address1=this.selectedaddress[0].address1;
        this.address2=this.selectedaddress[0].address2;
@@ -141,6 +144,27 @@ export class DetailpagePage implements OnInit {
   viewmap()
   {
     this.router.navigate(['/viewmap']);
+  }
+  deliverystatus()
+  {
+    console.log(this.orderdetails._id)
+    this.presentLoading();
+    this.detailpageservice.SaveOrderStatusData(this.orderdetails._id).subscribe(
+      (res) => {
+        //console.log(res);
+        setTimeout(() => { this.loading.dismiss();}, 2000);
+        if (res != '') {
+          this.presentAlert("Delivered Succesfully"); 
+          this.globals.Orderdetails=[];
+          this.router.navigate(['/deliverymanpage']);
+        }
+      },
+      (err) => {
+        console.log(err);
+        setTimeout(() => {this.loading.dismiss(); }, 2000);
+        this.presentAlert(err);
+      }
+    );
   }
   async presentAlert(alertmessage: string) {
     const alert = await this.alertController.create({

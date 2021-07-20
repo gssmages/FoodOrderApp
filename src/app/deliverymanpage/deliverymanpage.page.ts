@@ -12,8 +12,10 @@ import { Globals } from '../globals';
 })
 export class DeliverymanpagePage implements OnInit {
   private loading: any;  
-  OrderAssignedlist: any;  
-  deliverymanid:any;//="60ce02ed49af6759f0bb6996";
+  OrderAssignedlist: any;
+  shownorecord:boolean = false;
+  deliverymanid:any;//="60ce02ed49af6759f0bb6996";  
+  backButtonSubscription:any;
   constructor(private router: Router,
     public menu: MenuController,
     public alertController: AlertController,
@@ -24,16 +26,48 @@ export class DeliverymanpagePage implements OnInit {
 
   ngOnInit() {
   }
+  ngOnDestroy() {
+    this.backButtonSubscription.unsubscribe();
+  }
   ionViewWillEnter() {
+    this.backButtonSubscription = this.platform.backButton.subscribeWithPriority(9999,async () => {
+      // Catches the active view
+      const activeView = this.router.url;  
+      const urlParts = activeView.split('/');              
+      // Checks if can go back before show up the alert
+      if(urlParts.includes('home')) {        
+              const alert = await  this.alertController.create({
+                  header: 'Logout Alert',
+                  message: 'Are you sure want to close this app?',
+                  buttons: [{
+                      text: 'No',
+                      role: 'cancel',
+                      handler: () => {                       
+                      }
+                  },{
+                      text: 'Yes',
+                      handler: () => {                        
+                        navigator['app'].exitApp();
+                      }
+                  }]
+              });
+              return await alert.present();
+          }
+        });
     this.deliverymanid = this.globals.customerid;
     this.presentLoading();
     this.deliverymanservice.getOrderByDeliveryManData(this.deliverymanid).subscribe(
       (res) => {
-        //console.log(res);
+        console.log(res);
         setTimeout(() => { this.loading.dismiss();}, 2000);
-        if (res != '') {
-         this.OrderAssignedlist = res;
-        }
+        this.OrderAssignedlist = res;
+        if(this.OrderAssignedlist.length > 0)
+        {
+          this.shownorecord = true;
+        } 
+        else{
+          this.shownorecord = false;
+        }    
       },
       (err) => {
         console.log(err);

@@ -202,7 +202,7 @@ db.CustomerAddress.insertOne(
 
 db.CustomerAddress.find()
 
-db.CustomerAddress.updateMany({custid:"60dc70bb15541034d46902f9"},{$set: {'name': 'Magesh Babu S','email':'magesh@gmail.com','mobile':'9442778471'}})
+db.CustomerAddress.updateMany({custid:"60dc70bb15541034d46902f9"},{$set: {'name': 'Magesh S','email':'magesh@gmail.com','mobile':'9234243434'}})
 
 db.CustomerAddress.find({'custid':'3453434'})
 
@@ -223,8 +223,10 @@ db.Location.find()
 
 
 db.DeliveryMan.insertMany([
-  {'location':'Perambur','name':'Sureshbabu','mobile':'9454574623','email':'deliveryman@gmail.com',
-  'doorno':'342','address1':'address12342','address2':'Annanagar 1st street','area':'Annanagar east','Active':true }])
+  {'location':'Purasaivakkam','name':'Ramesh','mobile':'9442778471','email':'deliveryman@gmail.com',
+  'doorno':'342','address1':'address12342','address2':'Annanagar 1st street','area':'Annanagar east',
+  'Active':true,"password": "123456"}])
+
 
 db.DeliveryMan.find()
 db.DeliveryMan.update({name:"Sureshbabu"},{$set: {"password": "123456"}})
@@ -246,10 +248,11 @@ db.Orders.find();
 db.Orders.find( {"deliverymanid": "60ced8842fdf502e08ef1a6b" })
 
 
-db.Orders.update({"custid": "60db224821538d560405d346"},{$set: {"deliverymanid": "60ced8842fdf502e08ef1a6b"}})
-db.Orders.update({},{$set: {"deliverymanid": "60ce02ed49af6759f0bb6996"}})
+db.Orders.update({"custid": "60db224821538d560405d346"},{$set: {"deliverymanid": "60e593c9eb3faf23942edcb0"}})
+db.Orders.updateMany({},{$set: {"status": "InProgress"}})
 
 db.Orders.find( { _id: { $in: [ ObjectId("60d03c204d555a4fc81d2d28") ] } })
 
 
+db.Orders.find( {orderdatetime: {$gte: new Date(2021,6,1), $lte: new Date(2021,6,6)}})
 db.Orders.drop();

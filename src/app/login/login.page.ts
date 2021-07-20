@@ -265,7 +265,8 @@ export class LoginPage implements OnInit {
         console.log(this.deliveryman)
         if(this.deliveryman == true)
         {
-          console.log("delivery man service" )
+          this.globals.deliveryman = this.deliveryman;
+          console.log("delivery man service",this.globals.deliveryman )
           this.presentLoading();
           this.loginservice.getDeliveryManLoginData(this.mobilenumber,this.password).subscribe(
             (res) => {
@@ -300,7 +301,7 @@ export class LoginPage implements OnInit {
           ); 
         }
        else{
-
+        this.globals.deliveryman = this.deliveryman;
         this.presentLoading();
           this.loginservice.getCustomerLoginData(this.mobilenumber,this.password).subscribe(
             (res) => {

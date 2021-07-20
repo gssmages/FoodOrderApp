@@ -13,7 +13,8 @@ export class Globals {
   loginemail:string;
   customerid:string;
 
-  neworder:any;
+  neworder:any=false;
+  deliveryman:any;
   appversion: string;
 
   private appPages = new Subject<any>();
